@@ -29,7 +29,7 @@ class User {
   }
 
   async existsAlready() {
-    const existingUser = await this.getUserWithSameusername();
+    const existingUser = await this.getUserWithSameUsername();
     if (existingUser) {
       return true;
     }

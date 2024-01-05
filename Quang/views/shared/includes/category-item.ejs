@@ -1,0 +1,22 @@
+<article class="product-item">
+  <div class="product-item-content">
+    <h2><%= category.title %></h2>
+    <div class="product-item-actions">
+      <% if (locals.isAdmin) { %>
+      <a class="btn btn-alt" href="/admin/categories/<%= category.id %>"
+        >Edit</a
+      >
+      <button
+        class="btn btn-alt"
+        data-categoryid="<%= category.id %>"
+        data-csrf="<%= locals.csrfToken %>"
+      >
+        Delete
+      </button>
+      <% } %>
+      <a class="btn btn-alt" href="/admin/products/<%= category.id %>"
+        >View Products</a
+      >
+    </div>
+  </div>
+</article>

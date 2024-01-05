@@ -9,8 +9,8 @@ function getSignup(req, res) {
   if (!sessionData) {
     sessionData = {
       username: "",
-      confirmPassword: "",
       password: "",
+      confirmPassword: "",
       fullname: "",
       street: "",
       postal: "",
@@ -24,8 +24,8 @@ function getSignup(req, res) {
 async function signup(req, res, next) {
   const enteredData = {
     username: req.body.username,
-    confirmPassword: req.body["confirm-password"],
     password: req.body.password,
+    confirmPassword: req.body["confirm-password"],
     fullname: req.body.fullname,
     street: req.body.street,
     postal: req.body.postal,
@@ -112,7 +112,7 @@ async function login(req, res, next) {
   const user = new User(req.body.username, req.body.password);
   let existingUser;
   try {
-    existingUser = await user.getUserWithSameusername();
+    existingUser = await user.getUserWithSameUsername();
   } catch (error) {
     next(error);
     return;
@@ -144,7 +144,7 @@ async function login(req, res, next) {
   }
 
   authUtil.createUserSession(req, existingUser, function () {
-    res.redirect("/");
+    res.redirect("/products");
   });
 }
 

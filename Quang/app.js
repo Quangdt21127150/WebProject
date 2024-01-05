@@ -15,6 +15,7 @@ const cartMiddleware = require("./middlewares/cart");
 const updateCartPricesMiddleware = require("./middlewares/update-cart-prices");
 const notFoundMiddleware = require("./middlewares/not-found");
 const authRoutes = require("./routes/auth.routes");
+const categoriesRoutes = require("./routes/categories.routes");
 const productsRoutes = require("./routes/products.routes");
 const baseRoutes = require("./routes/base.routes");
 const adminRoutes = require("./routes/admin.routes");
@@ -45,6 +46,7 @@ app.use(checkAuthStatusMiddleware);
 
 app.use(baseRoutes);
 app.use(authRoutes);
+app.use(categoriesRoutes);
 app.use(productsRoutes);
 app.use("/cart", cartRoutes);
 app.use("/orders", protectRoutesMiddleware, ordersRoutes);

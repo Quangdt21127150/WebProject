@@ -1,24 +1,46 @@
-const express = require('express');
+const express = require("express");
 
-const adminController = require('../controllers/admin.controller');
-const imageUploadMiddleware = require('../middlewares/image-upload');
+const adminController = require("../controllers/admin.controller");
+const imageUploadMiddleware = require("../middlewares/image-upload");
 
 const router = express.Router();
 
-router.get('/products', adminController.getProducts); // /admin/products
+// /admin/categories
+router.get("/categories", adminController.getCategories);
 
-router.get('/products/new', adminController.getNewProduct);
+router.get("/categories/new", adminController.getNewCategory);
 
-router.post('/products', imageUploadMiddleware, adminController.createNewProduct);
+router.post("/categories", adminController.createNewCategory);
 
-router.get('/products/:id', adminController.getUpdateProduct);
+router.get("/categories/:id", adminController.getUpdateCategory);
 
-router.post('/products/:id', imageUploadMiddleware, adminController.updateProduct);
+router.post("/categories/:id", adminController.updateCategory);
 
-router.delete('/products/:id', adminController.deleteProduct);
+router.delete("/categories/:id", adminController.deleteCategory);
 
-router.get('/orders', adminController.getOrders);
+// /admin/products
+router.get("/products", adminController.getProducts);
 
-router.patch('/orders/:id', adminController.updateOrder);
+router.get("/products/new", adminController.getNewProduct);
+
+router.post(
+  "/products",
+  imageUploadMiddleware,
+  adminController.createNewProduct
+);
+
+router.get("/products/:id", adminController.getUpdateProduct);
+
+router.post(
+  "/products/:id",
+  imageUploadMiddleware,
+  adminController.updateProduct
+);
+
+router.delete("/products/:id", adminController.deleteProduct);
+
+router.get("/orders", adminController.getOrders);
+
+router.patch("/orders/:id", adminController.updateOrder);
 
 module.exports = router;

@@ -3,12 +3,7 @@ function isEmpty(value) {
 }
 
 function userCredentialsAreValid(username, password) {
-  return (
-    username &&
-    username.includes("@") &&
-    password &&
-    password.trim().length >= 6
-  );
+  return username && password && password.trim().length >= 6;
 }
 
 function userDetailsAreValid(username, password, name, street, postal, city) {
