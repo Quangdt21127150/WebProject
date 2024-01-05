@@ -15,16 +15,16 @@
     <form action="/signup" method="POST">
       <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
       <p>
-        <label for="email">E-Mail</label>
-        <input type="email" id="email" name="email" value="<%= inputData.email %>" required>
-      </p>
-      <p>
-        <label for="confirm-email">Confirm Email</label>
-        <input type="email" id="confirm-email" name="confirm-email" value="<%= inputData.confirmEmail %>" required>
+        <label for="username">E-Mail</label>
+        <input type="text" id="username" name="username" value="<%= inputData.username %>" required>
       </p>
       <p>
         <label for="password">Password</label>
         <input type="password" id="password" name="password" minlength="6" value="<%= inputData.password %>" required>
+      </p>
+      <p>
+        <label for="confirm-password">Confirm password</label>
+        <input type="password" id="confirm-password" name="confirm-password" value="<%= inputData.confirmPassword %>" required>
       </p>
       <hr>
       <p>

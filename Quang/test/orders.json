@@ -1,0 +1,29 @@
+[{
+  "_id": {
+    "$oid": "64ea0cf388ab3544bef46518"
+  },
+  "total": 70,
+  "products": [
+    {
+      "amount": 3,
+      "product": {
+        "$oid": "64d7398176e33756566657b2"
+      }
+    },
+    {
+      "amount": 2,
+      "product": {
+        "$oid": "64d73b6e76e33756566657b3"
+      }
+    }
+  ],
+  "status": 0,
+  "discount": 0,
+  "address": "",
+  "userId": {
+    "$oid": "64c9e50899162377fc1d29e6"
+  },
+  "date": {
+    "$date": "2023-08-26T14:32:19.787Z"
+  }
+}]
