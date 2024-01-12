@@ -58,9 +58,11 @@ async function updateCategory(req, res, next) {
 }
 
 async function deleteCategory(req, res, next) {
-  let category;
+  let category, product;
   try {
+    product = await Product.findByCateId(req.params.id);
     category = await Category.findById(req.params.id);
+    await product.removeAll();
     await category.remove();
   } catch (error) {
     return next(error);
@@ -80,8 +82,9 @@ async function getProducts(req, res, next) {
   }
 }
 
-function getNewProduct(req, res) {
-  res.render("admin/products/new-product");
+async function getNewProduct(req, res) {
+  const categories = await Category.findAll();
+  res.render("admin/products/new-product", { categories: categories });
 }
 
 async function createNewProduct(req, res, next) {
@@ -97,13 +100,17 @@ async function createNewProduct(req, res, next) {
     return;
   }
 
-  res.redirect("/admin/products");
+  res.redirect(`/categories/${product.cateId}`);
 }
 
 async function getUpdateProduct(req, res, next) {
   try {
     const product = await Product.findById(req.params.id);
-    res.render("admin/products/update-product", { product: product });
+    const categories = await Category.findAll();
+    res.render("admin/products/update-product", {
+      product: product,
+      categories: categories,
+    });
   } catch (error) {
     next(error);
   }
@@ -126,7 +133,7 @@ async function updateProduct(req, res, next) {
     return;
   }
 
-  res.redirect("/admin/products");
+  res.redirect(`/categories/${product.cateId}`);
 }
 
 async function deleteProduct(req, res, next) {

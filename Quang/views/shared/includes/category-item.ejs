@@ -4,7 +4,7 @@
     <div class="product-item-actions">
       <% if (locals.isAdmin) { %>
       <a class="btn btn-alt" href="/admin/categories/<%= category.id %>"
-        >Edit</a
+        >Update</a
       >
       <button
         class="btn btn-alt"
@@ -14,7 +14,7 @@
         Delete
       </button>
       <% } %>
-      <a class="btn btn-alt" href="/admin/products/<%= category.id %>"
+      <a class="btn btn-alt" href="/categories/<%= category.id %>"
         >View Products</a
       >
     </div>

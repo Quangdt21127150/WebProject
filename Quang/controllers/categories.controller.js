@@ -12,6 +12,17 @@ async function getAllCategories(req, res, next) {
   }
 }
 
+async function getProductsOfCategory(req, res, next) {
+  try {
+    const products = await Product.findByCateId(req.params.cateID);
+    res.render("admin/products/all-products", { products: products });
+  } catch (error) {
+    next(error);
+    return;
+  }
+}
+
 module.exports = {
   getAllCategories: getAllCategories,
+  getProductsOfCategory: getProductsOfCategory,
 };

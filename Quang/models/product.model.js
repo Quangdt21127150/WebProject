@@ -1,10 +1,11 @@
-const mongodb = require('mongodb');
+const mongodb = require("mongodb");
 
-const db = require('../data/database');
+const db = require("../data/database");
 
 class Product {
   constructor(productData) {
     this.title = productData.title;
+    this.cateId = productData.cateId;
     this.summary = productData.summary;
     this.price = +productData.price;
     this.description = productData.description;
@@ -25,11 +26,11 @@ class Product {
     }
     const product = await db
       .getDb()
-      .collection('products')
+      .collection("products")
       .findOne({ _id: prodId });
 
     if (!product) {
-      const error = new Error('Could not find product with provided id.');
+      const error = new Error("Could not find product with provided id.");
       error.code = 404;
       throw error;
     }
@@ -37,8 +38,20 @@ class Product {
     return new Product(product);
   }
 
+  static async findByCateId(cateID) {
+    const products = await db
+      .getDb()
+      .collection("products")
+      .find({ cateId: new mongodb.ObjectId(cateID) })
+      .toArray();
+
+    return products.map(function (productDocument) {
+      return new Product(productDocument);
+    });
+  }
+
   static async findAll() {
-    const products = await db.getDb().collection('products').find().toArray();
+    const products = await db.getDb().collection("products").find().toArray();
 
     return products.map(function (productDocument) {
       return new Product(productDocument);
@@ -46,13 +59,13 @@ class Product {
   }
 
   static async findMultiple(ids) {
-    const productIds = ids.map(function(id) {
+    const productIds = ids.map(function (id) {
       return new mongodb.ObjectId(id);
-    })
-    
+    });
+
     const products = await db
       .getDb()
-      .collection('products')
+      .collection("products")
       .find({ _id: { $in: productIds } })
       .toArray();
 
@@ -69,6 +82,7 @@ class Product {
   async save() {
     const productData = {
       title: this.title,
+      cateId: new mongodb.ObjectId(this.cateId),
       summary: this.summary,
       price: this.price,
       description: this.description,
@@ -82,14 +96,14 @@ class Product {
         delete productData.image;
       }
 
-      await db.getDb().collection('products').updateOne(
+      await db.getDb().collection("products").updateOne(
         { _id: productId },
         {
           $set: productData,
         }
       );
     } else {
-      await db.getDb().collection('products').insertOne(productData);
+      await db.getDb().collection("products").insertOne(productData);
     }
   }
 
@@ -100,7 +114,12 @@ class Product {
 
   remove() {
     const productId = new mongodb.ObjectId(this.id);
-    return db.getDb().collection('products').deleteOne({ _id: productId });
+    return db.getDb().collection("products").deleteOne({ _id: productId });
+  }
+
+  removeAll() {
+    const productId = new mongodb.ObjectId(this.id);
+    return db.getDb().collection("products").deleteMany({ _id: productId });
   }
 }
 

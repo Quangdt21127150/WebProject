@@ -4,7 +4,7 @@
     <h2><%= product.title %></h2>
     <div class="product-item-actions">
       <% if (locals.isAdmin) { %>
-      <a class="btn btn-alt" href="/admin/products/<%= product.id %>">Edit</a>
+      <a class="btn btn-alt" href="/admin/products/<%= product.id %>">Update</a>
       <button
         class="btn btn-alt"
         data-productid="<%= product.id %>"
