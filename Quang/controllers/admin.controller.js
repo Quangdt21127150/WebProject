@@ -58,11 +58,13 @@ async function updateCategory(req, res, next) {
 }
 
 async function deleteCategory(req, res, next) {
-  let category, product;
+  let category, products;
   try {
-    product = await Product.findByCateId(req.params.id);
+    products = await Product.findByCateId(req.params.id);
     category = await Category.findById(req.params.id);
-    await product.removeAll();
+    products.forEach((element) => {
+      element.remove();
+    });
     await category.remove();
   } catch (error) {
     return next(error);

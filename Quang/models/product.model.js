@@ -116,11 +116,6 @@ class Product {
     const productId = new mongodb.ObjectId(this.id);
     return db.getDb().collection("products").deleteOne({ _id: productId });
   }
-
-  removeAll() {
-    const productId = new mongodb.ObjectId(this.id);
-    return db.getDb().collection("products").deleteMany({ _id: productId });
-  }
 }
 
 module.exports = Product;
