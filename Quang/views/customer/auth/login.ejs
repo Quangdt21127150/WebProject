@@ -14,16 +14,31 @@
     <% } %>
     <form action="/login" method="POST">
       <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
+
       <p>
         <label for="username">Username</label>
         <input type="text" id="username" name="username" value="<%= inputData.username %>" required>
       </p>
+
       <p>
         <label for="password">Password</label>
         <input type="password" id="password" name="password" value="<%= inputData.password %>" required>
       </p>
+
       <button class="btn">Login</button>
-      <p id="switch-form"><a href="/signup">Create a new user</a></p>
+
+      <p id="switch-form" class="mt-3"><a href="/signup">Create a new user</a></p>
+
+      <p class="d-grid my-3 px-4">
+        <a
+          href="/gg"
+          id="btn-google"
+          class="btn text-uppercase text-white fw-bold"
+        >
+          <i class="fab fa-google me-2"></i>
+          Sign in with Google
+        </a>
+      </p>
     </form>
   </main>
 <%- include('../../shared/includes/footer') %>

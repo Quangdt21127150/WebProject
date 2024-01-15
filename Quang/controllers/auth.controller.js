@@ -148,6 +148,22 @@ async function login(req, res, next) {
   });
 }
 
+async function google(req, res) {
+  const urlGG = "https://accounts.google.com/o/oauth2/v2/auth";
+  const access_type = "offline";
+  const response_type = "code";
+  const redirect_uri = process.env.GOOGLE_CALLBACK_URL;
+  const client_id = process.env.GOOGLE_CLIENT_ID;
+  const qs = new URLSearchParams({
+    access_type,
+    response_type,
+    redirect_uri,
+    client_id,
+    scope: "https://www.googleapis.com/auth/userinfo.profile",
+  }).toString();
+  res.redirect(`${urlGG}?${qs}`);
+}
+
 function logout(req, res) {
   authUtil.destroyUserAuthSession(req);
   res.redirect("/login");
@@ -158,5 +174,6 @@ module.exports = {
   getLogin: getLogin,
   signup: signup,
   login: login,
+  google: google,
   logout: logout,
 };

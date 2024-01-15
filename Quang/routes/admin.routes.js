@@ -6,8 +6,6 @@ const imageUploadMiddleware = require("../middlewares/image-upload");
 const router = express.Router();
 
 // /admin/categories
-router.get("/categories", adminController.getCategories);
-
 router.get("/categories/new", adminController.getNewCategory);
 
 router.post("/categories", adminController.createNewCategory);
@@ -19,8 +17,6 @@ router.post("/categories/:id", adminController.updateCategory);
 router.delete("/categories/:id", adminController.deleteCategory);
 
 // /admin/products
-router.get("/products", adminController.getProducts);
-
 router.get("/products/new", adminController.getNewProduct);
 
 router.post(

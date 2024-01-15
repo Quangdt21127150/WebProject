@@ -3,16 +3,6 @@ const Product = require("../models/product.model");
 const Order = require("../models/order.model");
 
 //Categories Manage
-async function getCategories(req, res, next) {
-  try {
-    const categories = await Category.findAll();
-    res.render("admin/categories/all-categories", { categories: categories });
-  } catch (error) {
-    next(error);
-    return;
-  }
-}
-
 function getNewCategory(req, res) {
   res.render("admin/categories/new-category");
 }
@@ -29,7 +19,7 @@ async function createNewCategory(req, res, next) {
     return;
   }
 
-  res.redirect("/admin/categories");
+  res.redirect("/categories");
 }
 
 async function getUpdateCategory(req, res, next) {
@@ -54,7 +44,7 @@ async function updateCategory(req, res, next) {
     return;
   }
 
-  res.redirect("/admin/categories");
+  res.redirect("/categories");
 }
 
 async function deleteCategory(req, res, next) {
@@ -74,16 +64,6 @@ async function deleteCategory(req, res, next) {
 }
 
 //Products Manage
-async function getProducts(req, res, next) {
-  try {
-    const products = await Product.findAll();
-    res.render("admin/products/all-products", { products: products });
-  } catch (error) {
-    next(error);
-    return;
-  }
-}
-
 async function getNewProduct(req, res) {
   const categories = await Category.findAll();
   res.render("admin/products/new-product", { categories: categories });
@@ -179,14 +159,12 @@ async function updateOrder(req, res, next) {
 }
 
 module.exports = {
-  getCategories: getCategories,
   getNewCategory: getNewCategory,
   createNewCategory: createNewCategory,
   getUpdateCategory: getUpdateCategory,
   updateCategory: updateCategory,
   deleteCategory: deleteCategory,
 
-  getProducts: getProducts,
   getNewProduct: getNewProduct,
   createNewProduct: createNewProduct,
   getUpdateProduct: getUpdateProduct,

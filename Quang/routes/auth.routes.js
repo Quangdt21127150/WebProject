@@ -12,6 +12,12 @@ router.get("/login", authController.getLogin);
 
 router.post("/login", authController.login);
 
+router.get("/gg", authController.google);
+
+router.get("/gg/auth", async (req, res) => {
+  res.redirect("/products");
+});
+
 router.post("/logout", authController.logout);
 
 module.exports = router;
