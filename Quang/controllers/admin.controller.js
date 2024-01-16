@@ -1,5 +1,7 @@
 const Category = require("../models/category.model");
 const Product = require("../models/product.model");
+const Account = require("../models/account.model");
+const User = require("../models/user.model");
 const Order = require("../models/order.model");
 
 //Categories Manage
@@ -130,6 +132,44 @@ async function deleteProduct(req, res, next) {
   res.json({ message: "Deleted product!" });
 }
 
+//Accounts Manage
+function getNewAccount(req, res) {
+  res.render("admin/accounts/new-account");
+}
+
+async function createNewAccount(req, res, next) {
+  const user = new User(
+    req.body.username,
+    req.body.password,
+    req.body.fullname,
+    req.body.street,
+    req.body.postal,
+    req.body.city
+  );
+
+  try {
+    await user.signup();
+  } catch (error) {
+    next(error);
+    return;
+  }
+
+  res.redirect("/accounts");
+}
+
+async function deleteAccount(req, res, next) {
+  let account;
+  try {
+    account = await Account.findById(req.params.id);
+    await account.remove();
+  } catch (error) {
+    return next(error);
+  }
+
+  res.redirect("/accounts");
+}
+
+//Order Manage
 async function getOrders(req, res, next) {
   try {
     const orders = await Order.findAll();
@@ -170,6 +210,10 @@ module.exports = {
   getUpdateProduct: getUpdateProduct,
   updateProduct: updateProduct,
   deleteProduct: deleteProduct,
+
+  getNewAccount: getNewAccount,
+  createNewAccount: createNewAccount,
+  deleteAccount: deleteAccount,
 
   getOrders: getOrders,
   updateOrder: updateOrder,

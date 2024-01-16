@@ -148,20 +148,23 @@ async function login(req, res, next) {
   });
 }
 
-async function google(req, res) {
-  const urlGG = "https://accounts.google.com/o/oauth2/v2/auth";
-  const access_type = "offline";
-  const response_type = "code";
-  const redirect_uri = process.env.GOOGLE_CALLBACK_URL;
-  const client_id = process.env.GOOGLE_CLIENT_ID;
-  const qs = new URLSearchParams({
-    access_type,
-    response_type,
-    redirect_uri,
-    client_id,
-    scope: "https://www.googleapis.com/auth/userinfo.profile",
-  }).toString();
-  res.redirect(`${urlGG}?${qs}`);
+async function googleLogin(req, res) {
+  const user = new User(req.session.passport.user.emails[0].value);
+  let existingUser;
+  try {
+    existingUser = await user.getUserWithSameUsername();
+  } catch (error) {
+    next(error);
+    return;
+  }
+
+  if (existingUser) {
+    authUtil.createUserSession(req, existingUser, function () {
+      res.redirect("/products");
+    });
+  } else {
+    return res.redirect("/login");
+  }
 }
 
 function logout(req, res) {
@@ -174,6 +177,6 @@ module.exports = {
   getLogin: getLogin,
   signup: signup,
   login: login,
-  google: google,
+  googleLogin: googleLogin,
   logout: logout,
 };

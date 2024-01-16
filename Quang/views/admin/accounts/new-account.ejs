@@ -1,0 +1,18 @@
+<%- include('../../shared/includes/head', { pageTitle: 'Add new account' }) %>
+<link rel="stylesheet" href="/styles/forms.css">
+</head>
+<body>
+  <%- include('../../shared/includes/header') %>
+  <main>
+    <h1>Add new Account</h1>
+    <%- include('includes/account-form', { submitPath: '/admin/accounts', account: {
+      username: '',
+      password: '',
+      confirmPassword: '',
+      name: '',
+      street: '',
+      postal: '',
+      city: ''
+    }}) %>
+  </main>
+<%- include('../../shared/includes/footer') %>

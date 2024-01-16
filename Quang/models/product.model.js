@@ -43,6 +43,7 @@ class Product {
       .getDb()
       .collection("products")
       .find({ cateId: new mongodb.ObjectId(cateID) })
+      .sort({ title: 1 })
       .toArray();
 
     return products.map(function (productDocument) {
@@ -99,7 +100,12 @@ class Product {
   }
 
   static async findAll() {
-    const products = await db.getDb().collection("products").find().toArray();
+    const products = await db
+      .getDb()
+      .collection("products")
+      .find()
+      .sort({ title: 1 })
+      .toArray();
 
     return products.map(function (productDocument) {
       return new Product(productDocument);

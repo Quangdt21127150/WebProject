@@ -65,7 +65,17 @@ async function getProducts(req, res, next) {
 async function getProductDetails(req, res, next) {
   try {
     const product = await Product.findById(req.params.id);
-    res.render("customer/products/product-details", { product: product });
+    const products_cateID = await Product.findByCateId(product.cateId);
+    let related_products = [];
+    products_cateID.forEach((element) => {
+      if (element.id !== product.id) {
+        related_products.push(element);
+      }
+    });
+    res.render("customer/products/product-details", {
+      product: product,
+      related_products: related_products,
+    });
   } catch (error) {
     next(error);
   }

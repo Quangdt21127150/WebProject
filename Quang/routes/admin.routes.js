@@ -35,6 +35,14 @@ router.post(
 
 router.delete("/products/:id", adminController.deleteProduct);
 
+// /admin/accounts
+router.get("/accounts/new", adminController.getNewAccount);
+
+router.post("/accounts", adminController.createNewAccount);
+
+router.post("/accounts/delete/:id", adminController.deleteAccount);
+
+// /admin/orders
 router.get("/orders", adminController.getOrders);
 
 router.patch("/orders/:id", adminController.updateOrder);

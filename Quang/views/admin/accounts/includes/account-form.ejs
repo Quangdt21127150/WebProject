@@ -1,0 +1,81 @@
+<form action="<%= submitPath %>?_csrf=<%= locals.csrfToken %>" method="POST">
+  <p>
+    <label for="username">Username</label>
+    <input
+      type="text"
+      id="username"
+      name="username"
+      value="<%= account.username %>"
+      required
+    />
+  </p>
+  <p>
+    <label for="password">Password</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      minlength="6"
+      value="<%= account.password %>"
+      required
+    />
+  </p>
+  <p>
+    <label for="confirm-password">Confirm password</label>
+    <input
+      type="password"
+      id="confirm-password"
+      name="confirm-password"
+      value="<%= account.confirmPassword %>"
+      required
+    />
+  </p>
+  <hr />
+  <p>
+    <label for="fullname">Full Name</label>
+    <input
+      type="text"
+      id="fullname"
+      name="fullname"
+      value="<%= account.name %>"
+      required
+    />
+  </p>
+  <p>
+    <label for="street">Street</label>
+    <input
+      type="text"
+      id="street"
+      name="street"
+      value="<%= account.street %>"
+      required
+    />
+  </p>
+  <p>
+    <label for="postal">Postal Code</label>
+    <input
+      type="text"
+      id="postal"
+      name="postal"
+      minlength="5"
+      maxlength="5"
+      value="<%= account.postalCode %>"
+      required
+    />
+  </p>
+  <p>
+    <label for="city">City</label>
+    <input
+      type="text"
+      id="city"
+      name="city"
+      value="<%= account.city %>"
+      required
+    />
+  </p>
+
+  <p>
+    <button type="reset" class="btn btn-alt">Reset</button>
+    <button class="btn">Save</button>
+  </p>
+</form>

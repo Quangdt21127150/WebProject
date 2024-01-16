@@ -24,6 +24,10 @@ class User {
       .findOne({ _id: uid }, { projection: { password: 0 } });
   }
 
+  static findByUsername(username) {
+    return db.getDb().collection("users").findOne({ username: username });
+  }
+
   getUserWithSameUsername() {
     return db.getDb().collection("users").findOne({ username: this.username });
   }
@@ -44,6 +48,7 @@ class User {
       password: hashedPassword,
       name: this.name,
       address: this.address,
+      isAdmin: false,
     });
   }
 

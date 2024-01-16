@@ -37,6 +37,7 @@ class Category {
       .getDb()
       .collection("categories")
       .find()
+      .sort({ title: 1 })
       .toArray();
 
     return categories.map(function (categoryDocument) {

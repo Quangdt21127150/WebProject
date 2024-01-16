@@ -1,5 +1,4 @@
 <%- include('../../shared/includes/head', { pageTitle: 'All Categories' }) %>
-<link rel="stylesheet" href="/styles/categories.css">
 <script src="/scripts/category-management.js" defer></script>
 </head>
 <body>
@@ -12,7 +11,7 @@
       </p>
     </section>
     <section>
-      <ul id="categories-grid">
+      <ul>
         <% for (const category of categories) { %>
           <li>
             <%- include('../../shared/includes/category-item', { category: category }) %>
