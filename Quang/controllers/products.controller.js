@@ -17,9 +17,23 @@ async function getAllProducts(req, res, next) {
   try {
     const categories = await Category.findAll();
     const products = await Product.findAll();
+
+    let page = parseInt(req.query.page) || 1,
+      per_page = 6,
+      total_page = Math.ceil(products.length / per_page),
+      start = (page - 1) * per_page,
+      end = page * per_page;
+    if (page === total_page) {
+      end = products.length;
+    }
+
     res.render("customer/products/all-products", {
       categories: categories,
       products: products,
+      page: page,
+      start: start,
+      end: end,
+      total_page: total_page,
     });
   } catch (error) {
     next(error);
@@ -72,9 +86,23 @@ async function getProductDetails(req, res, next) {
         related_products.push(element);
       }
     });
+
+    let page = parseInt(req.query.page) || 1,
+      per_page = 6,
+      total_page = Math.ceil(related_products.length / per_page),
+      start = (page - 1) * per_page,
+      end = page * per_page;
+    if (page === total_page) {
+      end = related_products.length;
+    }
+
     res.render("customer/products/product-details", {
       product: product,
       related_products: related_products,
+      page: page,
+      start: start,
+      end: end,
+      total_page: total_page,
     });
   } catch (error) {
     next(error);

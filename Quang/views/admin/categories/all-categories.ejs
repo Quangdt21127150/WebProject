@@ -12,12 +12,40 @@
     </section>
     <section>
       <ul>
-        <% for (const category of categories) { %>
+        <% for (let i = start; i < end; ++i) { %>
           <li>
-            <%- include('../../shared/includes/category-item', { category: category }) %>
+            <%- include('../../shared/includes/category-item', { category: categories[i] }) %>
           </li>
         <% } %>
       </ul>
+
+      <nav aria-label="Page navigation example" class="mt-3">
+        <ul id="paging" class="pagination">
+          <li class="page-item">
+            <a class="btn btn-alt page-link" href="/categories?page=<%= page <= 1 ? 1 : page - 1 %>" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+
+          <% for (let i = 1; i <= total_page; ++i) { %>
+            <% if (i === page) { %>
+              <li class="page-item">
+                <a class="btn page-link text-bg-warning" href="/categories?page=<%= i%>"><%= i%></a>
+              </li>
+            <% } else { %>
+              <li class="page-item">
+                <a class="btn btn-alt page-link" href="/categories?page=<%= i%>"><%= i%></a>
+              </li>
+            <% } %>
+          <% } %>
+
+          <li class="page-item">
+            <a class="btn btn-alt page-link" href="/categories?page=<%= page >= total_page ? total_page : page + 1 %>" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </section>
   </main>
 <%- include('../../shared/includes/footer') %>

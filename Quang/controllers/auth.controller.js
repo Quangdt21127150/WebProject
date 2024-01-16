@@ -144,7 +144,7 @@ async function login(req, res, next) {
   }
 
   authUtil.createUserSession(req, existingUser, function () {
-    res.redirect("/products");
+    res.redirect("/products?page=1");
   });
 }
 
@@ -160,7 +160,7 @@ async function googleLogin(req, res) {
 
   if (existingUser) {
     authUtil.createUserSession(req, existingUser, function () {
-      res.redirect("/products");
+      res.redirect("/products?page=1");
     });
   } else {
     return res.redirect("/login");
