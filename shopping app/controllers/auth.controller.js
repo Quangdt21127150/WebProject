@@ -3,6 +3,7 @@ const authUtil = require("../util/authentication");
 const validation = require("../util/validation");
 const sessionFlash = require("../util/session-flash");
 const Account = require("../models/account.model");
+const jwt = require("jsonwebtoken");
 
 function getSignup(req, res) {
   let sessionData = sessionFlash.getSessionData(req);
@@ -111,6 +112,13 @@ function getLogin(req, res) {
   }
 
   res.render("customer/auth/login", { inputData: sessionData });
+
+  //Authenticate user
+  // const username = req.body.username;
+  // const user = { name: username };
+
+  // const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+  // res.json({ accessToken: accessToken });
 }
 
 async function login(req, res, next) {

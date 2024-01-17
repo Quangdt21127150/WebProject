@@ -5,6 +5,7 @@ const passport = require("passport");
 const googleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const User = require("../models/user.model");
 const { EventEmitter } = require("events");
+const jwt = require("jsonwebtoken");
 
 const myEmitter = new EventEmitter();
 
@@ -44,6 +45,23 @@ passport.use(
     }
   )
 );
+
+router.get("/post", authenticateToken, async (req, res) => {
+  const posts = await User.findAll();
+  res.json(posts.filter((post) => post.username === req.user.username));
+});
+
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (token == null) return res.sendStatus(401);
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+}
 
 router.get("/signup", authController.getSignup);
 
