@@ -36,6 +36,26 @@ class Account {
     return new Account(account);
   }
 
+  static async findExisted(username, accountId) {
+    let accId;
+    try {
+      accId = new mongodb.ObjectId(accountId);
+    } catch (error) {
+      error.code = 404;
+      throw error;
+    }
+
+    const accounts = await db
+      .getDb()
+      .collection("users")
+      .find({ $and: [{ username: username }, { _id: { $ne: accId } }] })
+      .toArray();
+
+    return accounts.map(function (accountDocument) {
+      return new Account(accountDocument);
+    });
+  }
+
   static async findAll() {
     const accounts = await db
       .getDb()

@@ -198,6 +198,51 @@ async function updateOrder(req, res, next) {
   }
 }
 
+//Statistic
+async function getDataStatistic(req, res, next) {
+  const today = new Date();
+  const year = today.getFullYear();
+  let revenue = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  let max = 0;
+
+  try {
+    const orders = await Order.findAll();
+    for (let order of orders) {
+      revenue[order.date.getMonth()] += order.productData.totalPrice;
+    }
+
+    for (let i = 0; i < 12; ++i) {
+      if (max < revenue[i]) {
+        max = revenue[i];
+      }
+    }
+  } catch (error) {
+    next(error);
+  }
+
+  res.render("admin/statistic/admin-statistic", {
+    year: year,
+    max: max,
+  });
+}
+
+async function postStatistic(req, res, next) {
+  let revenue = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+  try {
+    const orders = await Order.findAll();
+    for (let order of orders) {
+      if (order.status === "fulfilled") {
+        revenue[order.date.getMonth()] += order.productData.totalPrice;
+      }
+    }
+
+    res.status(200).send({ data: revenue });
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   getNewCategory: getNewCategory,
   createNewCategory: createNewCategory,
@@ -217,4 +262,7 @@ module.exports = {
 
   getOrders: getOrders,
   updateOrder: updateOrder,
+
+  getDataStatistic: getDataStatistic,
+  postStatistic: postStatistic,
 };

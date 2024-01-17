@@ -47,4 +47,9 @@ router.get("/orders", adminController.getOrders);
 
 router.patch("/orders/:id", adminController.updateOrder);
 
+// /admin/statistic
+router.get("/statistic", adminController.getDataStatistic);
+
+router.post("/statistic", adminController.postStatistic);
+
 module.exports = router;
