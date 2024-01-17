@@ -1,0 +1,79 @@
+<%- include('../../shared/includes/head', { pageTitle: 'All Products' }) %>
+<link rel="stylesheet" href="/styles/products.css">
+</head>
+<body>
+  <%- include('../../shared/includes/header') %>
+  <main>
+    <h1 class="my-2">All Products</h1>
+
+    <form action="/products" method="POST">
+      <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
+      <div class="input-group">
+        <div class="d-flex">
+          <input type="search" name="search" class="form-control me-1" placeholder="Search"/>
+          <button type="submit" id="btn-search" class="btn">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+  
+        <div class="d-flex">
+          <label for="categories" class="fs-3 ms-4">Category</label>
+          <select id="categories" name="cateID" class="mx-3 rounded-2">
+            <option value="all">All</option>
+            <% for (const category of categories) { %>
+              <option value="<%= category.id %>"><%= category.title %></option>
+            <% } %>
+          </select>
+  
+          <label for="price" class="fs-3 ms-2">Price</label>
+          <select name="price" id="price" class="mx-3 rounded-2">
+            <option value="all">All</option>
+            <option value="cheap">&lt; 100.000</option>
+            <option value="medium">100.000 - 500.000</option>
+            <option value="expensive">&gt; 500.000</option>
+          </select>
+
+          <button type="submit" id="btn-search" class="btn ms-1">
+            <i class="fa-solid fa-filter"></i>
+          </button>
+        </div>
+      </div>
+  
+      <ul id="products-grid">
+        <% for (let i = start; i < end; ++i) { %>
+          <li>
+            <%- include('../../shared/includes/product-item', { product: products[i] }) %>
+          </li>
+        <% } %>
+      </ul>
+
+      <nav aria-label="Page navigation example" class="mb-3">
+        <ul id="paging" class="pagination">
+          <li class="page-item">
+            <a class="btn btn-alt page-link" href="/products?page=<%= page <= 1 ? 1 : page - 1 %>" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+
+          <% for (let i = 1; i <= total_page; ++i) { %>
+            <% if (i === page) { %>
+              <li class="page-item">
+                <a class="btn page-link text-bg-warning" href="/products?page=<%= i%>"><%= i%></a>
+              </li>
+            <% } else { %>
+              <li class="page-item">
+                <a class="btn btn-alt page-link" href="/products?page=<%= i%>"><%= i%></a>
+              </li>
+            <% } %>
+          <% } %>
+
+          <li class="page-item">
+            <a class="btn btn-alt page-link" href="/products?page=<%= page >= total_page ? total_page : page + 1 %>" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </form>
+  </main>
+<%- include('../../shared/includes/footer') %>

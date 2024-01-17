@@ -1,0 +1,57 @@
+<%- include('../../shared/includes/head', { pageTitle: product.title }) %>
+<link rel="stylesheet" href="/styles/products.css">
+<script src="/scripts/cart-management.js" defer></script>
+</head>
+<body>
+  <%- include('../../shared/includes/header') %>
+  <main id="product-details">
+    <header>
+      <img src="<%= product.imageUrl %>" alt="<%= product.title %>" id="picture">
+      <div id="product-info">
+        <h1><%= product.title %></h1>
+        <p><%= product.price %> VND</p>
+        <button class="btn" data-productid="<%= product.id %>" data-csrf="<%= locals.csrfToken %>">Add to Cart</button>
+      </div>
+    </header>
+    
+    <p id="product-description"><%= product.description %></p>
+
+    <p class="text-warning fw-bold">RELATED PRODUCTS</p>
+
+    <ul id="products-grid">
+      <% for (let i = start; i < end; ++i) { %>
+        <li>
+          <%- include('../../shared/includes/product-item', { product: related_products[i] }) %>
+        </li>
+      <% } %>
+    </ul>
+
+    <nav aria-label="Page navigation example" class="mb-3">
+      <ul id="paging" class="pagination">
+        <li class="page-item">
+          <a class="btn btn-alt page-link" href="/products/<%= product.id %>?page=<%= page <= 1 ? 1 : page - 1 %>" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+
+        <% for (let i = 1; i <= total_page; ++i) { %>
+          <% if (i === page) { %>
+            <li class="page-item">
+              <a class="btn page-link text-bg-warning" href="/products/<%= product.id %>?page=<%= i%>"><%= i%></a>
+            </li>
+          <% } else { %>
+            <li class="page-item">
+              <a class="btn btn-alt page-link" href="/products/<%= product.id %>?page=<%= i%>"><%= i%></a>
+            </li>
+          <% } %>
+        <% } %>
+
+        <li class="page-item">
+          <a class="btn btn-alt page-link" href="/products/<%= product.id %>?page=<%= page >= total_page ? total_page : page + 1 %>" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </main>
+<%- include('../../shared/includes/footer') %>

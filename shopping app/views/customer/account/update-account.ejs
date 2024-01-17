@@ -1,0 +1,10 @@
+<%- include('../../shared/includes/head', { pageTitle: 'Update account' }) %>
+<link rel="stylesheet" href="/styles/forms.css">
+</head>
+<body>
+  <%- include('../../shared/includes/header') %>
+  <main>
+    <h1>Update Account</h1>
+    <%- include('./includes/account-form-update', { submitPath: '/accounts/' + account.id, account: account }) %>
+  </main>
+<%- include('../../shared/includes/footer') %>
