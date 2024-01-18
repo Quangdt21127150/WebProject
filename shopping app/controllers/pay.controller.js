@@ -45,7 +45,7 @@ async function createNewPaymentAccount(req, res, next) {
     return;
   }
 
-  if (req.query.login === false) {
+  if (req.query.login === "2") {
     res.redirect("https://localhost:3000/");
     return;
   }

@@ -96,9 +96,7 @@ async function signup(req, res, next) {
     return;
   }
 
-  res.redirect(
-    `https://localhost:5000/?username=${req.body.username}&login=false`
-  );
+  res.redirect(`https://localhost:5000/?username=${req.body.username}&login=2`);
 }
 
 function getLogin(req, res) {

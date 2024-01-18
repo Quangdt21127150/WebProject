@@ -5,13 +5,10 @@
     <div class="product-item-actions">
       <% if (locals.isAdmin) { %>
       <a class="btn btn-alt" href="/admin/products/<%= product.id %>">Update</a>
-      <button
-        class="btn btn-alt"
-        data-productid="<%= product.id %>"
-        data-csrf="<%= locals.csrfToken %>"
-      >
-        Delete
-      </button>
+      <form action="/admin/products/delete/<%= product.id %>" method="POST">
+        <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>" />
+        <button class="btn btn-alt">Delete</button>
+      </form>
       <% } else { %>
       <a class="btn btn-alt" href="/products/<%= product.id %>">View Details</a>
       <% } %>

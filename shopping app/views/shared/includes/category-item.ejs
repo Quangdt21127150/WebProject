@@ -1,18 +1,15 @@
 <article class="product-item">
   <div class="product-item-content">
     <h2><%= category.title %></h2>
-    <div class="product-item-actions">
+    <div class="product-item-actions d-flex">
       <% if (locals.isAdmin) { %>
       <a class="btn btn-alt" href="/admin/categories/<%= category.id %>"
         >Update</a
       >
-      <button
-        class="btn btn-alt"
-        data-categoryid="<%= category.id %>"
-        data-csrf="<%= locals.csrfToken %>"
-      >
-        Delete
-      </button>
+      <form action="/admin/categories/delete/<%= category.id %>" method="POST">
+        <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>" />
+        <button class="btn btn-alt mx-2">Delete</button>
+      </form>
       <% } %>
       <a class="btn btn-alt" href="/categories/<%= category.id %>"
         >View Products</a

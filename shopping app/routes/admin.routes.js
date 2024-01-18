@@ -14,7 +14,7 @@ router.get("/categories/:id", adminController.getUpdateCategory);
 
 router.post("/categories/:id", adminController.updateCategory);
 
-router.delete("/categories/:id", adminController.deleteCategory);
+router.post("/categories/delete/:id", adminController.deleteCategory);
 
 // /admin/products
 router.get("/products/new", adminController.getNewProduct);
@@ -33,7 +33,7 @@ router.post(
   adminController.updateProduct
 );
 
-router.delete("/products/:id", adminController.deleteProduct);
+router.post("/products/delete/:id", adminController.deleteProduct);
 
 // /admin/accounts
 router.get("/accounts/new", adminController.getNewAccount);

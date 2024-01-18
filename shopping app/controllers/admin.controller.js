@@ -62,7 +62,7 @@ async function deleteCategory(req, res, next) {
     return next(error);
   }
 
-  res.json({ message: "Deleted category!" });
+  res.redirect("/categories");
 }
 
 //Products Manage
@@ -129,7 +129,7 @@ async function deleteProduct(req, res, next) {
     return next(error);
   }
 
-  res.json({ message: "Deleted product!" });
+  res.redirect(`/categories/${product.cateId}`);
 }
 
 //Accounts Manage

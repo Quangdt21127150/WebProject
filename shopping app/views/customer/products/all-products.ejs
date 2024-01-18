@@ -11,6 +11,7 @@
       <div class="input-group">
         <div class="d-flex">
           <input type="search" name="search" class="form-control me-1" placeholder="Search"/>
+          
           <button type="submit" id="btn-search" class="btn">
             <i class="fas fa-search"></i>
           </button>
@@ -38,6 +39,7 @@
           </button>
         </div>
       </div>
+    </form>
   
       <ul id="products-grid">
         <% for (let i = start; i < end; ++i) { %>
@@ -74,6 +76,5 @@
           </li>
         </ul>
       </nav>
-    </form>
   </main>
 <%- include('../../shared/includes/footer') %>

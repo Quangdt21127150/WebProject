@@ -1,6 +1,5 @@
 <%- include('../../shared/includes/head', { pageTitle: 'All Products' }) %>
 <link rel="stylesheet" href="/styles/products.css">
-<script src="/scripts/product-management.js" defer></script>
 </head>
 <body>
   <%- include('../../shared/includes/header') %>
@@ -13,12 +12,40 @@
     </section>
     <section>
       <ul id="products-grid">
-        <% for (const product of products) { %>
+        <% for (let i = start; i < end; ++i) { %>
           <li>
-            <%- include('../../shared/includes/product-item', { product: product }) %>
+            <%- include('../../shared/includes/product-item', { product: products[i] }) %>
           </li>
         <% } %>
       </ul>
+
+      <nav aria-label="Page navigation example" class="mb-3">
+        <ul id="paging" class="pagination">
+          <li class="page-item">
+            <a class="btn btn-alt page-link" href="/categories/<%= category_id %>?page=<%= page <= 1 ? 1 : page - 1 %>" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+
+          <% for (let i = 1; i <= total_page; ++i) { %>
+            <% if (i === page) { %>
+              <li class="page-item">
+                <a class="btn page-link text-bg-warning" href="/categories/<%= category_id %>?page=<%= i%>"><%= i%></a>
+              </li>
+            <% } else { %>
+              <li class="page-item">
+                <a class="btn btn-alt page-link" href="/categories/<%= category_id %>?page=<%= i%>"><%= i%></a>
+              </li>
+            <% } %>
+          <% } %>
+
+          <li class="page-item">
+            <a class="btn btn-alt page-link" href="/categories/<%= category_id %>?page=<%= page >= total_page ? total_page : page + 1 %>" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </section>
   </main>
 <%- include('../../shared/includes/footer') %>
