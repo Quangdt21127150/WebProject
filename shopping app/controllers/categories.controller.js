@@ -27,15 +27,14 @@ async function getAllCategories(req, res, next) {
 async function getProductsOfCategory(req, res, next) {
   try {
     const products = await Product.findByCateId(req.params.cateID);
-    const categories = await Category.findAll();
 
     let page = parseInt(req.query.page) || 1,
       per_page = 5,
-      total_page = Math.ceil(categories.length / per_page),
+      total_page = Math.ceil(products.length / per_page),
       start = (page - 1) * per_page,
       end = page * per_page;
-    if (page === total_page || categories.length === 0) {
-      end = categories.length;
+    if (page === total_page || products.length === 0) {
+      end = products.length;
     }
 
     res.render("admin/products/all-products", {
