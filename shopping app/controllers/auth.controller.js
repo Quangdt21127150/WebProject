@@ -110,13 +110,6 @@ function getLogin(req, res) {
   }
 
   res.render("customer/auth/login", { inputData: sessionData });
-
-  //Authenticate user
-  // const username = req.body.username;
-  // const user = { name: username };
-
-  // const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-  // res.json({ accessToken: accessToken });
 }
 
 async function login(req, res, next) {
