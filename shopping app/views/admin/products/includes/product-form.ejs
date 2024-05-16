@@ -14,6 +14,9 @@
     />
   </p>
 
+  <input id="cateId" name="cateId" value="<%= category.id %>" class="d-none"/>
+  <p>Category: <%= category.title %></p>
+
   <div id="image-upload-control">
     <p>
       <label for="image">Image</label>
@@ -22,8 +25,8 @@
         id="image"
         name="image"
         accept="image/png,image/jpg"
-        <% if(imageRequired) { %>
-          required 
+        <% if (imageRequired) { %>
+          required
         <% } %> 
       >
     </p>
@@ -58,9 +61,7 @@
 
   <p>
     <label for="description">Description</label>
-    <textarea id="description" name="description" rows="7" required>
-<%= product.description %></textarea
-    >
+    <textarea id="description" name="description" rows="7" required><%= product.description %></textarea>
   </p>
 
   <p>

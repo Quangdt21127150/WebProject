@@ -67,8 +67,8 @@ async function deleteCategory(req, res, next) {
 
 //Products Manage
 async function getNewProduct(req, res) {
-  const categories = await Category.findAll();
-  res.render("admin/products/new-product", { categories: categories });
+  const category = await Category.findById(req.params.cateId);
+  res.render("admin/products/new-product", { category: category });
 }
 
 async function createNewProduct(req, res, next) {
@@ -76,6 +76,7 @@ async function createNewProduct(req, res, next) {
     ...req.body,
     image: req.file.filename,
   });
+  console.log(req.body.title)
 
   try {
     await product.save();
@@ -90,10 +91,10 @@ async function createNewProduct(req, res, next) {
 async function getUpdateProduct(req, res, next) {
   try {
     const product = await Product.findById(req.params.id);
-    const categories = await Category.findAll();
+    const category = await Category.findById(product.cateId);
     res.render("admin/products/update-product", {
       product: product,
-      categories: categories,
+      category: category,
     });
   } catch (error) {
     next(error);

@@ -17,7 +17,7 @@ router.post("/categories/:id", adminController.updateCategory);
 router.post("/categories/delete/:id", adminController.deleteCategory);
 
 // admin/products
-router.get("/products/new", adminController.getNewProduct);
+router.get("/products/new/:cateId", adminController.getNewProduct);
 
 router.post(
   "/products",
