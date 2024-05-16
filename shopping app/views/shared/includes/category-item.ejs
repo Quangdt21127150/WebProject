@@ -1,6 +1,6 @@
 <article class="product-item">
   <div class="product-item-content">
-    <h2><%= category.title %></h2>
+    <h2 style="text-wrap: wrap"><%= category.title %></h2>
     <div class="product-item-actions d-flex">
       <% if (locals.isAdmin) { %>
       <a class="btn btn-alt" href="/admin/categories/<%= category.id %>"
