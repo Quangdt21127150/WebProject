@@ -12,8 +12,8 @@ const jwt = require("jsonwebtoken");
 const opts = {
   requestCert: true,
   rejectUnauthorized: false,
-  key: fs.readFileSync("./code.key", { encoding: "utf-8" }),
-  cert: fs.readFileSync("./code.crt", { encoding: "utf-8" }),
+  key: fs.readFileSync("./localhost.key", { encoding: "utf-8" }),
+  cert: fs.readFileSync("./localhost.crt", { encoding: "utf-8" }),
 };
 
 const createSessionConfig = require("./config/session");
