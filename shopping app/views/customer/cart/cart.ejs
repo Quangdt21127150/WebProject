@@ -14,7 +14,7 @@
       <% } %>
     </ul>
     <div id="cart-total">
-      <p>Total: <span id="cart-total-price"><%= locals.cart.totalPrice.toFixed(2) %></span> VND</p>
+      <p>Total: <span id="cart-total-price"><%= locals.cart.totalPrice %></span> VND</p>
 
       <% if (locals.isAuth) { %>
         <form action="/orders" method="POST">

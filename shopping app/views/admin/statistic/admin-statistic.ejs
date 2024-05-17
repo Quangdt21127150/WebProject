@@ -6,11 +6,20 @@
   <%- include('../../shared/includes/header') %>
   <main>
     <h3 class="my-3">
-      Number of revenue by month of the current year (<%= year %>)
+      Sale Statistics
     </h3>
-    <h3 class="text-warning my-3">Highest Revenue: <%= max %> VND</h3>
-    <button class="btn mb-3" data-csrf="<%= locals.csrfToken %>" id="showChart">
-      Show chart
+    <div class="d-flex mb-3">
+      <label for="time" class="fs-3 me-2">Time range</label>
+      <select name="time" id="time" class="rounded-2">
+        <option value="month">By month in current year</option>
+        <option value="year">The last 10 year</option>
+      </select>
+    </div>
+    <button class="btn mb-3 me-2" data-csrf="<%= locals.csrfToken %>" id="revenue">
+      Revenue
+    </button>
+    <button class="btn mb-3" data-csrf="<%= locals.csrfToken %>" id="quantity">
+      Quantity
     </button>
     <section>
       <canvas id="myChart" height="150" width="300"></canvas>

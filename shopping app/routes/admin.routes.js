@@ -48,8 +48,14 @@ router.get("/orders", adminController.getOrders);
 router.patch("/orders/:id", adminController.updateOrder);
 
 // admin/statistic
-router.get("/statistic", adminController.getDataStatistic);
+router.get("/statistic", adminController.getStatistic);
 
-router.post("/statistic", adminController.postStatistic);
+router.post("/revenue", adminController.postRevenueByMonth);
+
+router.post("/revenue2", adminController.postRevenue10Year);
+
+router.post("/quantity", adminController.postQuantityByMonth);
+
+router.post("/quantity2", adminController.postQuantity10Year);
 
 module.exports = router;

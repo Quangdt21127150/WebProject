@@ -10,7 +10,7 @@
       </p>
     </section>
     <section>
-      <table class="table table-striped table-hover mt-4">
+      <table class="table table-striped table-hover mt-4 text-center">
         <thead>
           <tr class="table-light">
             <th scope="col">Category</th>
@@ -20,7 +20,7 @@
         <tbody>
           <% for (const category of categories) { %>
             <tr>
-              <th><%= category.title %></th>
+              <td><%= category.title %></td>
               <td>
                 <div class="d-inline-flex">
                   <a class="btn btn-alt" href="/admin/categories/<%= category.id %>">

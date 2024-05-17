@@ -107,7 +107,7 @@ a {
 }
 
 .badge {
-  margin-left: var(--space-2);
+  margin-left: var(--space-1);
   padding: 0.15rem var(--space-4);
   border-radius: 10rem;
   background-color: var(--color-primary-500);
@@ -117,6 +117,11 @@ a {
 #btn-google {
   background-color: crimson;
   border: 1px solid crimson;
+}
+
+#btn-facebook {
+  background-color: blue;
+  border: 1px solid blue;
 }
 
 #btn-search {

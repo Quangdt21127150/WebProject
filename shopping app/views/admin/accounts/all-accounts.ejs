@@ -16,7 +16,7 @@
             <th scope="col">Username</th>
             <th scope="col">Name</th>
             <th scope="col">Street</th>
-            <th scope="col">Postal Code</th>
+            <th scope="col" class="text-nowrap">Postal code</th>
             <th scope="col">City</th>
             <th scope="col">Type</th>
             <th scope="col">Manage</th>
@@ -25,7 +25,7 @@
         <tbody>
           <% for (const account of accounts) { %>
             <tr>
-              <th><%= account.username %></th>
+              <td><%= account.username %></td>
               <td><%= account.name %></td>
               <td><%= account.address.street %></td>
               <td><%= account.address.postalCode %></td>
@@ -34,7 +34,7 @@
                 <% if (account.isAdmin) { %>
                   Admin
                 <% } else { %>
-                  Client
+                  Customer
                 <% } %>
               </td>
               <td>
