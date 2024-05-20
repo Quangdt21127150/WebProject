@@ -120,13 +120,6 @@ a {
 }
 
 #btn-facebook {
-  background-color: blue;
-  border: 1px solid blue;
-}
-
-#btn-search {
-  padding: var(--space-2);
-  background-color: blue;
-  border: 1px solid blue;
-  border-radius: var(--border-radius-small);
+  background-color: #0866ff;
+  border: 1px solid #0866ff;
 }

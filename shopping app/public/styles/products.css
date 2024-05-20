@@ -75,3 +75,25 @@
     text-align: left;
   }
 }
+
+#carouselExample {
+  position: relative;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  position: absolute;
+  top: 45%;
+  transform: translateY(-50%);
+  width: 5%;
+  height: 100%;
+  z-index: 1;
+}
+
+.carousel-control-prev {
+  left: -7%;
+}
+
+.carousel-control-next {
+  right: -7%;
+}

@@ -18,40 +18,31 @@
 
     <p class="text-warning fw-bold">RELATED PRODUCTS</p>
 
-    <ul id="products-grid">
-      <% for (let i = start; i < end; ++i) { %>
-        <li>
-          <%- include('../../shared/includes/product-item', { product: related_products[i] }) %>
-        </li>
-      <% } %>
-    </ul>
-
-    <nav aria-label="Page navigation example" class="mb-3">
-      <ul id="paging" class="pagination">
-        <li class="page-item">
-          <a class="btn btn-alt page-link" href="/products/<%= product.id %>?page=<%= page <= 1 ? 1 : page - 1 %>" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-
-        <% for (let i = 1; i <= total_page; ++i) { %>
-          <% if (i === page) { %>
-            <li class="page-item">
-              <a class="btn page-link text-bg-warning" href="/products/<%= product.id %>?page=<%= i%>"><%= i%></a>
-            </li>
-          <% } else { %>
-            <li class="page-item">
-              <a class="btn btn-alt page-link" href="/products/<%= product.id %>?page=<%= i%>"><%= i%></a>
-            </li>
-          <% } %>
+    <div id="carouselExample" class="carousel slide">
+      <div class="carousel-inner">
+        <% for (let i = 0; i < number_product; i += 3) { %>
+          <div class="carousel-item <% if(i == 0) { %> active <% } %>">
+            <ul id="products-grid">
+              <% for (let j = 0; j < 3; ++j) { %>
+                <%  if (i + j < number_product) { %>
+                  <li>
+                    <%- include('../../shared/includes/product-item', { product: related_products[i + j] }) %>
+                  </li>
+                <% } %>
+              <% } %>
+            </ul>
+          </div>
         <% } %>
+      </div>
 
-        <li class="page-item">
-          <a class="btn btn-alt page-link" href="/products/<%= product.id %>?page=<%= page >= total_page ? total_page : page + 1 %>" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+      <button class="carousel-control-prev text-white" id="arrow-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next text-white" id="arrow-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
   </main>
 <%- include('../../shared/includes/footer') %>

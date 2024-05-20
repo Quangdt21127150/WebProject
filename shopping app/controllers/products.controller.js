@@ -100,22 +100,10 @@ async function getProductDetails(req, res, next) {
       }
     });
 
-    let page = parseInt(req.query.page) || 1,
-      per_page = 6,
-      total_page = Math.ceil(related_products.length / per_page),
-      start = (page - 1) * per_page,
-      end = page * per_page;
-    if (page === total_page || related_products.length === 0) {
-      end = related_products.length;
-    }
-
     res.render("customer/products/product-details", {
       product: product,
       related_products: related_products,
-      page: page,
-      start: start,
-      end: end,
-      total_page: total_page,
+      number_product: related_products.length,
     });
   } catch (error) {
     next(error);

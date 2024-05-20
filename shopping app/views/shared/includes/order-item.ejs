@@ -7,8 +7,7 @@
   <section class="order-details">
     <% if (locals.isAdmin) { %>
       <address>
-        <p><a href="mailto:<%= order.userData.username %>"><%= order.userData.name %></a></p>
-        <p><%= order.userData.address.street %> (<%= order.userData.address.postalCode %> <%= order.userData.address.city %>)</p>
+        <p><a href="mailto:<%= order.userData.username %>"><%= order.userData.username %></a></p>
       </address>
     <% } %>
     <ul>

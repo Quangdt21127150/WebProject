@@ -173,6 +173,27 @@ async function googleLogin(req, res) {
   }
 }
 
+async function facebookLogin(req, res) {
+  const user = new User(req.session.passport.user.emails[0].value);
+  let existingUser;
+  try {
+    existingUser = await user.getUserWithSameUsername();
+  } catch (error) {
+    next(error);
+    return;
+  }
+
+  if (existingUser) {
+    authUtil.createUserSession(req, existingUser, function () {
+      res.redirect(
+        `https://localhost:5000/?username=${req.session.passport.user.emails[0].value}&login=3`
+      );
+    });
+  } else {
+    return res.redirect("/login");
+  }
+}
+
 function logout(req, res) {
   authUtil.destroyUserAuthSession(req);
   res.redirect("/login");
@@ -184,5 +205,6 @@ module.exports = {
   signup: signup,
   login: login,
   googleLogin: googleLogin,
+  facebookLogin: facebookLogin,
   logout: logout,
 };

@@ -5,24 +5,26 @@
 <body>
   <%- include('../../shared/includes/header') %>
   <main>
-    <h3 class="my-3">
-      Sale Statistics
-    </h3>
-    <div class="d-flex mb-3">
+    <h1 class="my-2">
+      Sales Statistics
+    </h1>
+    <div class="d-flex my-3">
       <label for="time" class="fs-3 me-2">Time range</label>
       <select name="time" id="time" class="rounded-2">
         <option value="month">By month in current year</option>
         <option value="year">The last 10 year</option>
       </select>
+
+      <button class="btn mx-3" data-csrf="<%= locals.csrfToken %>" id="revenue">
+        Revenue
+      </button>
+      <button class="btn" data-csrf="<%= locals.csrfToken %>" id="quantity">
+        Quantity
+      </button>
     </div>
-    <button class="btn mb-3 me-2" data-csrf="<%= locals.csrfToken %>" id="revenue">
-      Revenue
-    </button>
-    <button class="btn mb-3" data-csrf="<%= locals.csrfToken %>" id="quantity">
-      Quantity
-    </button>
+    
     <section>
-      <canvas id="myChart" height="150" width="300"></canvas>
+      <canvas id="myChart" height="200rem" width="300rem"></canvas>
     </section>
   </main>
 <%- include('../../shared/includes/footer') %>

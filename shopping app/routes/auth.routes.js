@@ -3,6 +3,7 @@ const express = require("express");
 const authController = require("../controllers/auth.controller");
 const passport = require("passport");
 const googleStrategy = require("passport-google-oauth").OAuth2Strategy;
+const facebookStrategy = require("passport-facebook").Strategy;
 const User = require("../models/user.model");
 const { EventEmitter } = require("events");
 const jwt = require("jsonwebtoken");
@@ -30,7 +31,6 @@ passport.use(
       callbackURL: process.env.GOOGLE_CALLBACK_URL,
     },
     async function (accessToken, refreshToken, profile, done) {
-      userProfile = profile;
       myEmitter.setMaxListeners(15);
       const user = await User.findByUsername(profile.emails[0].value);
 
@@ -42,6 +42,30 @@ passport.use(
         console.log("Google User already exist in DB");
       }
       return done(null, profile);
+    }
+  )
+);
+
+passport.use(
+  new facebookStrategy(
+    {
+      clientID: process.env.FACEBOOK_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+      callbackURL: process.env.FACEBOOK_CALLBACK_URL,
+    },
+    async function (accesToken, refreshToken, profile, cb) {
+      myEmitter.setMaxListeners(15);
+      const user = await User.findByUsername(profile.emails[0].value);
+
+      if (!user) {
+        console.log("Adding new facebook account");
+        const user = new User(profile.emails[0].value, "?", "?", "?", "?", "?");
+        await user.signup(false);
+        return cb(null, profile);
+      } else {
+        console.log("Facebook User already exist in DB");
+        return cb(null, profile);
+      }
     }
   )
 );
@@ -76,6 +100,8 @@ router.get(
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
+router.get("/fb", passport.authenticate("facebook", { scope: ["email"] }));
+
 router.get(
   "/gg/auth",
   passport.authenticate("google", {
@@ -86,7 +112,19 @@ router.get(
   }
 );
 
+router.get(
+  "/fb/auth",
+  passport.authenticate("facebook", {
+    failureRedirect: "/login",
+  }),
+  function (req, res) {
+    res.redirect("/auth/success2");
+  }
+);
+
 router.get("/auth/success", authController.googleLogin);
+
+router.get("/auth/success2", authController.facebookLogin);
 
 router.post("/logout", authController.logout);
 
