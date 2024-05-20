@@ -22,7 +22,7 @@
       <nav aria-label="Page navigation example" class="mb-3">
         <ul id="paging" class="pagination">
           <li class="page-item">
-            <a class="btn btn-alt page-link" href="/categories/<%= category_id %>?page=<%= page <= 1 ? 1 : page - 1 %>" aria-label="Previous">
+            <a class="btn btn-alt page-link rounded-start-2" href="/categories/<%= category_id %>?page=<%= page <= 1 ? 1 : page - 1 %>" aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
@@ -30,17 +30,17 @@
           <% for (let i = 1; i <= total_page; ++i) { %>
             <% if (i === page) { %>
               <li class="page-item">
-                <a class="btn page-link text-bg-warning" href="/categories/<%= category_id %>?page=<%= i%>"><%= i%></a>
+                <a class="btn page-link rounded-0 text-bg-warning" href="/categories/<%= category_id %>?page=<%= i%>"><%= i%></a>
               </li>
             <% } else { %>
               <li class="page-item">
-                <a class="btn btn-alt page-link" href="/categories/<%= category_id %>?page=<%= i%>"><%= i%></a>
+                <a class="btn btn-alt page-link rounded-0" href="/categories/<%= category_id %>?page=<%= i%>"><%= i%></a>
               </li>
             <% } %>
           <% } %>
 
           <li class="page-item">
-            <a class="btn btn-alt page-link" href="/categories/<%= category_id %>?page=<%= page >= total_page ? total_page : page + 1 %>" aria-label="Next">
+            <a class="btn btn-alt page-link rounded-0 rounded-end-2" href="/categories/<%= category_id %>?page=<%= page >= total_page ? total_page : page + 1 %>" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
             </a>
           </li>

@@ -9,11 +9,11 @@ class Account {
     this.name = accountData.name;
     this.address = accountData.address;
     this.isAdmin = accountData.isAdmin;
+    this.avatar = accountData.avatar;
+    this.updateImageData();
     if (accountData._id) {
       this.id = accountData._id.toString();
     }
-    this.avatar = accountData.avatar;
-    this.updateImageData();
   }
 
   static async findById(accountId) {
