@@ -6,7 +6,7 @@
   <main>
     <h1 class="my-2">All Products</h1>
 
-    <form action="/products" method="POST">
+    <form action="/products/search" method="GET">
       <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
       <div class="input-group d-flex mt-3">
         <input type="search" name="search" class="form-control" placeholder="Search"/>
@@ -48,7 +48,7 @@
       <nav aria-label="Page navigation example" class="mb-3">
         <ul id="paging" class="pagination">
           <li class="page-item">
-            <a class="btn btn-alt page-link" href="/products?page=<%= page <= 1 ? 1 : page - 1 %>" aria-label="Previous">
+            <a class="btn btn-alt page-link rounded-0 rounded-start-2" href="/products?page=<%= page <= 1 ? 1 : page - 1 %>" aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
@@ -56,17 +56,17 @@
           <% for (let i = 1; i <= total_page; ++i) { %>
             <% if (i === page) { %>
               <li class="page-item">
-                <a class="btn page-link text-bg-warning" href="/products?page=<%= i%>"><%= i%></a>
+                <a class="btn page-link rounded-0 text-bg-warning" href="/products?page=<%= i%>"><%= i%></a>
               </li>
             <% } else { %>
               <li class="page-item">
-                <a class="btn btn-alt page-link" href="/products?page=<%= i%>"><%= i%></a>
+                <a class="btn btn-alt rounded-0 page-link" href="/products?page=<%= i%>"><%= i%></a>
               </li>
             <% } %>
           <% } %>
 
           <li class="page-item">
-            <a class="btn btn-alt page-link" href="/products?page=<%= page >= total_page ? total_page : page + 1 %>" aria-label="Next">
+            <a class="btn btn-alt page-link rounded-0 rounded-end-2" href="/products?page=<%= page >= total_page ? total_page : page + 1 %>" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
             </a>
           </li>

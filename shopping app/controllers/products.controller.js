@@ -43,9 +43,9 @@ async function getAllProducts(req, res, next) {
 async function getProducts(req, res, next) {
   try {
     const categories = await Category.findAll();
-    const name = req.body.search || "";
-    const cateID = req.body.cateID;
-    const price = req.body.price;
+    const name = req.query.search || "";
+    const cateID = req.query.cateID;
+    const price = req.query.price;
     let products = await Product.findAll();
     if (name !== "") {
       products = mergeProducts(products, await Product.findByName(name));
