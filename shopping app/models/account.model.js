@@ -12,6 +12,8 @@ class Account {
     if (accountData._id) {
       this.id = accountData._id.toString();
     }
+    this.avatar = accountData.avatar;
+    this.updateImageData();
   }
 
   static async findById(accountId) {
@@ -81,15 +83,25 @@ class Account {
     });
   }
 
+  updateImageData() {
+    this.imagePath = `account-data/images/${this.avatar}`;
+    this.imageUrl = `/accounts/assets/images/${this.avatar}`;
+  }
+
   async save() {
     const accountData = {
       username: this.username,
       name: this.name,
       address: this.address,
+      avatar: this.avatar,
     };
 
     if (this.id) {
       const accountId = new mongodb.ObjectId(this.id);
+
+      if (!this.avatar) {
+        delete accountData.avatar;
+      }
 
       await db.getDb().collection("users").updateOne(
         { _id: accountId },
@@ -98,6 +110,11 @@ class Account {
         }
       );
     }
+  }
+
+  replaceImage(newImage) {
+    this.avatar = newImage;
+    this.updateImageData();
   }
 
   remove() {

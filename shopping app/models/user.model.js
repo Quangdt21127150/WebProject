@@ -13,6 +13,7 @@ class User {
       postalCode: postal,
       city: city,
     };
+    this.avatar = "";
   }
 
   static findById(userId) {
@@ -53,6 +54,7 @@ class User {
       name: this.name,
       address: this.address,
       isAdmin: isAdmin,
+      avatar: this.avatar,
     });
   }
 

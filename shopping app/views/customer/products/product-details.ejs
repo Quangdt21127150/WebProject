@@ -1,9 +1,9 @@
-<%- include('../../shared/includes/head', { pageTitle: product.title }) %>
+<%- include('../../shared/homepage/head', { pageTitle: product.title }) %>
 <link rel="stylesheet" href="/styles/products.css">
 <script src="/scripts/cart-management.js" defer></script>
 </head>
 <body>
-  <%- include('../../shared/includes/header') %>
+  <%- include('../../shared/homepage/header') %>
   <main id="product-details">
     <header>
       <img src="<%= product.imageUrl %>" alt="<%= product.title %>" id="picture">
@@ -26,7 +26,7 @@
               <% for (let j = 0; j < 3; ++j) { %>
                 <%  if (i + j < number_product) { %>
                   <li>
-                    <%- include('../../shared/includes/product-item', { product: related_products[i + j] }) %>
+                    <%- include('../../shared/homepage/product-item', { product: related_products[i + j] }) %>
                   </li>
                 <% } %>
               <% } %>
@@ -45,4 +45,4 @@
       </button>
     </div>
   </main>
-<%- include('../../shared/includes/footer') %>
+<%- include('../../shared/homepage/footer') %>

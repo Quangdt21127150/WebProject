@@ -1,11 +1,14 @@
-<%- include('../../shared/includes/head', { pageTitle: account.username }) %>
+<%- include('../../shared/homepage/head', { pageTitle: account.username }) %>
 <link rel="stylesheet" href="/styles/products.css">
 </head>
 <body>
-  <%- include('../../shared/includes/header') %>
+  <%- include('../../shared/homepage/header') %>
   <main>
-    <header class="text-center">
-      <h1 class="my-5">Hello <%= account.username %></h1>
+    <header>
+      <div class="d-flex">
+        <img class="border p-3 my-4 rounded-circle img-fluid me-3" src="<%= account.imageUrl %>" alt="<%= account.username %>" />
+        <h1 class="my-5">Hello <%= account.username %></h1>
+      </div>
       
       <p>Fullname: <%= account.name %></p>
       <p>Street: <%= account.address.street %></p>
@@ -17,4 +20,4 @@
       </form>
     </header>
   </main>
-<%- include('../../shared/includes/footer') %>
+<%- include('../../shared/homepage/footer') %>

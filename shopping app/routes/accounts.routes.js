@@ -1,6 +1,7 @@
 const express = require("express");
 
 const accountsController = require("../controllers/accounts.controller");
+const imageUploadMiddleware = require("../middlewares/image-upload");
 
 const router = express.Router();
 
@@ -10,6 +11,10 @@ router.get("/profile", accountsController.getAccount);
 
 router.get("/accounts/:id", accountsController.getUpdateAccount);
 
-router.post("/accounts/:id", accountsController.updateAccount);
+router.post(
+    "/accounts/:id",
+    imageUploadMiddleware,
+    accountsController.updateAccount
+  );
 
 module.exports = router;

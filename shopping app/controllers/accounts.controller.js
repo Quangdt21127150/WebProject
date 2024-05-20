@@ -14,7 +14,7 @@ async function getAllAccounts(req, res, next) {
 async function getAccount(req, res, next) {
   try {
     const account = await Account.findById(req.session.uid);
-    res.render("customer/account/profile", {
+    res.render("shared/account/profile", {
       account: account,
     });
   } catch (error) {
@@ -25,7 +25,7 @@ async function getAccount(req, res, next) {
 async function getUpdateAccount(req, res, next) {
   try {
     const account = await Account.findById(req.session.uid);
-    res.render("customer/account/update-account", { account: account });
+    res.render("shared/account/update-account", { account: account });
   } catch (error) {
     next(error);
   }
@@ -38,6 +38,7 @@ async function updateAccount(req, res, next) {
     street: req.body.street,
     postal: req.body.postal,
     city: req.body.city,
+    avatar: req.body.avatar,
   };
 
   const account = new Account({
@@ -51,9 +52,14 @@ async function updateAccount(req, res, next) {
       city: enteredData.city,
     },
     isAdmin: false,
+    avatar: enteredData.avatar,
   });
 
   const staticAcc = await Account.findById(req.params.id);
+
+  if (req.file) {
+    account.replaceImage(req.file.filename);
+  }
 
   try {
     const existsAlready = await Account.findExisted(

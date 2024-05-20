@@ -68,7 +68,8 @@ async function signup(req, res, next) {
     req.body.fullname,
     req.body.street,
     req.body.postal,
-    req.body.city
+    req.body.city,
+    ""
   );
 
   try {
