@@ -4,7 +4,7 @@ const mongodb = require("mongodb");
 const db = require("../data/database");
 
 class User {
-  constructor(username, password, fullname, street, postal, city, avatar) {
+  constructor(username, password, fullname, street, postal, city, image) {
     this.username = username;
     this.password = password;
     this.name = fullname;
@@ -13,7 +13,7 @@ class User {
       postalCode: postal,
       city: city,
     };
-    this.avatar = avatar;
+    this.image = image;
   }
 
   static findById(userId) {
@@ -54,7 +54,7 @@ class User {
       name: this.name,
       address: this.address,
       isAdmin: isAdmin,
-      avatar: this.avatar,
+      image: this.image,
     });
   }
 

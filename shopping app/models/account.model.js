@@ -9,7 +9,7 @@ class Account {
     this.name = accountData.name;
     this.address = accountData.address;
     this.isAdmin = accountData.isAdmin;
-    this.avatar = accountData.avatar;
+    this.image = accountData.image;
     this.updateImageData();
     if (accountData._id) {
       this.id = accountData._id.toString();
@@ -84,8 +84,8 @@ class Account {
   }
 
   updateImageData() {
-    this.imagePath = `account-data/images/${this.avatar}`;
-    this.imageUrl = `/accounts/assets/images/${this.avatar}`;
+    this.imagePath = `image-data/images/${this.image}`;
+    this.imageUrl = `/assets/images/${this.image}`;
   }
 
   async save() {
@@ -93,14 +93,14 @@ class Account {
       username: this.username,
       name: this.name,
       address: this.address,
-      avatar: this.avatar,
+      image: this.image,
     };
 
     if (this.id) {
       const accountId = new mongodb.ObjectId(this.id);
 
-      if (!this.avatar) {
-        delete accountData.avatar;
+      if (!this.image) {
+        delete accountData.image;
       }
 
       await db.getDb().collection("users").updateOne(
@@ -113,7 +113,7 @@ class Account {
   }
 
   replaceImage(newImage) {
-    this.avatar = newImage;
+    this.image = newImage;
     this.updateImageData();
   }
 

@@ -37,8 +37,11 @@ class Category {
       .getDb()
       .collection("categories")
       .find()
-      .sort({ title: 1 })
       .toArray();
+
+    categories.sort((a, b) =>
+      a.title.localeCompare(b.title, undefined, { sensitivity: "accent" })
+    );
 
     return categories.map(function (categoryDocument) {
       return new Category(categoryDocument);

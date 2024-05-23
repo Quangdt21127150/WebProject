@@ -38,7 +38,7 @@ async function updateAccount(req, res, next) {
     street: req.body.street,
     postal: req.body.postal,
     city: req.body.city,
-    avatar: req.body.avatar,
+    image: req.body.image,
   };
 
   const account = new Account({
@@ -52,7 +52,7 @@ async function updateAccount(req, res, next) {
       city: enteredData.city,
     },
     isAdmin: false,
-    avatar: enteredData.avatar,
+    image: enteredData.image,
   });
 
   const staticAcc = await Account.findById(req.params.id);

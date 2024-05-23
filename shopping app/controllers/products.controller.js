@@ -13,39 +13,12 @@ function mergeProducts(p_root, p_temp) {
   return products;
 }
 
-async function getAllProducts(req, res, next) {
-  try {
-    const categories = await Category.findAll();
-    const products = await Product.findAll();
-
-    let page = parseInt(req.query.page) || 1,
-      per_page = 6,
-      total_page = Math.ceil(products.length / per_page),
-      start = (page - 1) * per_page,
-      end = page * per_page;
-    if (page === total_page || products.length === 0) {
-      end = products.length;
-    }
-
-    res.render("customer/products/all-products", {
-      categories: categories,
-      products: products,
-      page: page,
-      start: start,
-      end: end,
-      total_page: total_page,
-    });
-  } catch (error) {
-    next(error);
-  }
-}
-
 async function getProducts(req, res, next) {
   try {
     const categories = await Category.findAll();
-    const name = req.query.search || "";
-    const cateID = req.query.cateID;
-    const price = req.query.price;
+    const name = req.query.name || "";
+    const cateID = req.query.cateID || "all";
+    const price = req.query.price || "all";
     let products = await Product.findAll();
     if (name !== "") {
       products = mergeProducts(products, await Product.findByName(name));
@@ -55,15 +28,15 @@ async function getProducts(req, res, next) {
     }
     if (price === "cheap") {
       products = mergeProducts(products, await Product.findLowerPrice(100000));
-    } else if (price === "expensive") {
-      products = mergeProducts(
-        products,
-        await Product.findGreaterPrice(500000)
-      );
     } else if (price === "medium") {
       products = mergeProducts(
         products,
         await Product.findInPriceRange(100000, 500000)
+      );
+    } else if (price === "expensive") {
+      products = mergeProducts(
+        products,
+        await Product.findGreaterPrice(500000)
       );
     }
 
@@ -76,10 +49,15 @@ async function getProducts(req, res, next) {
       end = products.length;
     }
 
+    console.log(req.query);
+    console.log(page + " " + name + " " + cateID + " " + price);
     res.render("customer/products/all-products", {
       categories: categories,
       products: products,
       page: page,
+      name: name,
+      cateID: cateID,
+      price: price,
       start: start,
       end: end,
       total_page: total_page,
@@ -111,7 +89,6 @@ async function getProductDetails(req, res, next) {
 }
 
 module.exports = {
-  getAllProducts: getAllProducts,
   getProducts: getProducts,
   getProductDetails: getProductDetails,
 };

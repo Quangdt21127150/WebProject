@@ -149,7 +149,7 @@ async function login(req, res, next) {
   }
 
   authUtil.createUserSession(req, existingUser, function () {
-    res.redirect("/products?page=1");
+    res.redirect("/products");
   });
 }
 

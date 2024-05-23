@@ -1,6 +1,6 @@
-<form 
-  action="<%= submitPath %>?_csrf=<%= locals.csrfToken %>" 
-  method="POST" 
+<form
+  action="<%= submitPath %>?_csrf=<%= locals.csrfToken %>"
+  method="POST"
   enctype="multipart/form-data"
 >
   <p>
@@ -25,19 +25,14 @@
     />
   </p>
 
-  <div id="image-upload-control">
+  <section id="image-upload-control">
     <p>
-      <label for="avatar">Avatar</label>
-      <input
-        type="file"
-        id="avatar"
-        name="avatar"
-        accept="image/png,image/jpg"
-      />
+      <label for="image">image</label>
+      <input type="file" id="image" name="image" accept="image/png,image/jpg" />
     </p>
 
     <img src="" alt="Selected image." />
-  </div>
+  </section>
 
   <p>
     <label for="street">Street</label>

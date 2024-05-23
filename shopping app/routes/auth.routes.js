@@ -36,7 +36,7 @@ passport.use(
 
       if (!user) {
         console.log("Adding new Google account");
-        const user = new User(profile.emails[0].value, "?", "?", "?", "?", "?");
+        const user = new User(profile.emails[0].value, "?", "?", "?", "?", "?", "");
         await user.signup(false);
       } else {
         console.log("Google User already exist in DB");
@@ -59,7 +59,7 @@ passport.use(
 
       if (!user) {
         console.log("Adding new facebook account");
-        const user = new User(profile.emails[0].value, "?", "?", "?", "?", "?");
+        const user = new User(profile.emails[0].value, "?", "?", "?", "?", "?", "");
         await user.signup(false);
         return cb(null, profile);
       } else {

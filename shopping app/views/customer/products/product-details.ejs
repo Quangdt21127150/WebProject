@@ -7,11 +7,11 @@
   <main id="product-details">
     <header>
       <img src="<%= product.imageUrl %>" alt="<%= product.title %>" id="picture">
-      <div id="product-info">
+      <article id="product-info">
         <h1><%= product.title %></h1>
         <p><%= product.price %> VND</p>
         <button class="btn" data-productid="<%= product.id %>" data-csrf="<%= locals.csrfToken %>">Add to Cart</button>
-      </div>
+      </article>
     </header>
     
     <p id="product-description"><%= product.description %></p>

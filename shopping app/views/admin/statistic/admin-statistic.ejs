@@ -8,7 +8,7 @@
     <h1 class="my-2">
       Sales Statistics
     </h1>
-    <div class="d-flex my-3">
+    <section class="d-flex my-3">
       <label for="time" class="fs-3 me-2">Time range</label>
       <select name="time" id="time" class="rounded-2">
         <option value="month">By month in current year</option>
@@ -21,7 +21,7 @@
       <button class="btn" data-csrf="<%= locals.csrfToken %>" id="quantity">
         Quantity
       </button>
-    </div>
+    </section>
     
     <section>
       <canvas id="myChart" height="200rem" width="300rem"></canvas>

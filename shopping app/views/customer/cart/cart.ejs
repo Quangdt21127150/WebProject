@@ -13,7 +13,7 @@
         </li>
       <% } %>
     </ul>
-    <div id="cart-total">
+    <section id="cart-total">
       <p>Total: <span id="cart-total-price"><%= locals.cart.totalPrice %></span> VND</p>
 
       <% if (locals.isAuth) { %>
@@ -24,6 +24,6 @@
       <% } else { %>
         <p id="cart-total-fallback">Log in to proceed and purchase the items.</p>
       <% } %>
-    </div>
+    </section>
   </main>
 <%- include('../../shared/homepage/footer') %>

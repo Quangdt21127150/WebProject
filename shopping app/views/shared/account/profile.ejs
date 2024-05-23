@@ -5,10 +5,10 @@
   <%- include('../../shared/homepage/header') %>
   <main>
     <header>
-      <div class="d-flex">
-        <img class="border p-3 my-4 rounded-circle img-fluid me-3" src="<%= account.imageUrl %>" alt="<%= account.username %>" />
+      <article class="d-flex">
+        <img class="rounded-circle img-thumbnail my-4 me-3" style="width: 6rem; height: 6rem;" src="<%= account.imageUrl %>" alt="<%= account.username %>" />
         <h1 class="my-5">Hello <%= account.username %></h1>
-      </div>
+      </article>
       
       <p>Fullname: <%= account.name %></p>
       <p>Street: <%= account.address.street %></p>

@@ -31,11 +31,11 @@
               <td><%= account.address.postalCode %></td>
               <td><%= account.address.city %></td>
               <td>
-                <% if (account.isAdmin) { %>
+                <% if(account.isAdmin) { %> 
                   Admin
-                <% } else { %>
-                  Customer
-                <% } %>
+                <% } else { %>  
+                  Customer 
+                <% } %> 
               </td>
               <td>
                 <% if (!account.isAdmin) { %>

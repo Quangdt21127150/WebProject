@@ -43,8 +43,11 @@ class Product {
       .getDb()
       .collection("products")
       .find({ cateId: new mongodb.ObjectId(cateID) })
-      .sort({ title: 1 })
       .toArray();
+
+    products.sort((a, b) =>
+      a.title.localeCompare(b.title, undefined, { sensitivity: "accent" })
+    );
 
     return products.map(function (productDocument) {
       return new Product(productDocument);
@@ -52,11 +55,11 @@ class Product {
   }
 
   static async findByName(name) {
-    const products = await db
-      .getDb()
-      .collection("products")
-      .find({ title: new RegExp(".*" + name + ".*") })
-      .toArray();
+    const all_products = await Product.findAll();
+
+    const products = all_products.filter((product) =>
+      product.title.toLowerCase().includes(name.toLowerCase())
+    );
 
     return products.map(function (productDocument) {
       return new Product(productDocument);
@@ -100,12 +103,11 @@ class Product {
   }
 
   static async findAll() {
-    const products = await db
-      .getDb()
-      .collection("products")
-      .find()
-      .sort({ title: 1 })
-      .toArray();
+    const products = await db.getDb().collection("products").find().toArray();
+
+    products.sort((a, b) =>
+      a.title.localeCompare(b.title, undefined, { sensitivity: "accent" })
+    );
 
     return products.map(function (productDocument) {
       return new Product(productDocument);
@@ -129,8 +131,8 @@ class Product {
   }
 
   updateImageData() {
-    this.imagePath = `product-data/images/${this.image}`;
-    this.imageUrl = `/products/assets/images/${this.image}`;
+    this.imagePath = `image-data/images/${this.image}`;
+    this.imageUrl = `/assets/images/${this.image}`;
   }
 
   async save() {
