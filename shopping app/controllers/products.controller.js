@@ -49,8 +49,6 @@ async function getProducts(req, res, next) {
       end = products.length;
     }
 
-    console.log(req.query);
-    console.log(page + " " + name + " " + cateID + " " + price);
     res.render("customer/products/all-products", {
       categories: categories,
       products: products,

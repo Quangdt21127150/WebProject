@@ -4,48 +4,43 @@
 <body>
   <%- include('../../shared/homepage/header') %>
   <main>
-    <h1 class="my-2">Product Management</h1>
-    <section>
-      <p>
-        <a href="/admin/products/new/<%= category_id %>" class="btn mt-3">Add Product</a>
-      </p>
-    </section>
-    <section>
-      <ul id="products-grid">
-        <% for (let i = start; i < end; ++i) { %>
-          <li>
-            <%- include('../../shared/homepage/product-item', { product: products[i] }) %>
+    <h1 class="my-2">Product Management</h1>   
+    <p>
+      <a href="/admin/products/new/<%= category_id %>" class="btn mt-3">Add Product</a>
+    </p>
+
+    <ul id="products-grid">
+      <% for (let i = start; i < end; ++i) { %>
+        <li>
+          <%- include('../../shared/homepage/product-item', { product: products[i] }) %>
+        </li>
+      <% } %>
+    </ul>
+
+    <ul class="pagination mb-3">
+      <li class="page-item">
+        <a class="btn btn-alt page-link rounded-start-2" href="/categories/<%= category_id %>?page=<%= page <= 1 ? 1 : page - 1 %>" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+
+      <% for (let i = 1; i <= total_page; ++i) { %>
+        <% if (i === page) { %>
+          <li class="page-item">
+            <a class="btn page-link rounded-0 text-bg-warning" href="/categories/<%= category_id %>?page=<%= i%>"><%= i%></a>
+          </li>
+        <% } else { %>
+          <li class="page-item">
+            <a class="btn btn-alt page-link rounded-0" href="/categories/<%= category_id %>?page=<%= i%>"><%= i%></a>
           </li>
         <% } %>
-      </ul>
+      <% } %>
 
-      <nav aria-label="Page navigation example" class="mb-3">
-        <ul id="paging" class="pagination">
-          <li class="page-item">
-            <a class="btn btn-alt page-link rounded-start-2" href="/categories/<%= category_id %>?page=<%= page <= 1 ? 1 : page - 1 %>" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-
-          <% for (let i = 1; i <= total_page; ++i) { %>
-            <% if (i === page) { %>
-              <li class="page-item">
-                <a class="btn page-link rounded-0 text-bg-warning" href="/categories/<%= category_id %>?page=<%= i%>"><%= i%></a>
-              </li>
-            <% } else { %>
-              <li class="page-item">
-                <a class="btn btn-alt page-link rounded-0" href="/categories/<%= category_id %>?page=<%= i%>"><%= i%></a>
-              </li>
-            <% } %>
-          <% } %>
-
-          <li class="page-item">
-            <a class="btn btn-alt page-link rounded-0 rounded-end-2" href="/categories/<%= category_id %>?page=<%= page >= total_page ? total_page : page + 1 %>" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </section>
+      <li class="page-item">
+        <a class="btn btn-alt page-link rounded-0 rounded-end-2" href="/categories/<%= category_id %>?page=<%= page >= total_page ? total_page : page + 1 %>" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
   </main>
 <%- include('../../shared/homepage/footer') %>

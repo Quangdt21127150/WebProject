@@ -1,29 +1,33 @@
 <%- include('../../shared/homepage/head', { pageTitle: 'All Products' }) %>
 <link rel="stylesheet" href="/styles/products.css">
-<script src="/public/scripts/search-products-management.js" defer></script>
 </head>
 <body>
   <%- include('../../shared/homepage/header') %>
   <main>
     <h1 class="my-2">All Products</h1>
 
-    <form action="/products" method="GET">
-      <div class="input-group d-flex mt-3">
-        <input type="search" name="name" class="form-control" placeholder="Search" value="<%= name %>"/>
+    <form id="searchForm" action="/products" method="GET">
+      <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>" />
+      <div class="d-flex mt-3">
+        <input type="search" name="name" class="form-control rounded-end-0" placeholder="Search" value="<%= name %>"/>
         <button type="submit" class="border border-primary bg-primary rounded-end-1 p-2">
           <i class="fas fa-search text-white"></i>
         </button>
+      </div>
 
-        <label for="categories" class="fs-3 ms-3">Category</label>
-        <select id="categories" name="cateID" class="mx-3 rounded-2" value="<%= cateID %>">
+      <div class="d-flex mt-3">
+        <label for="categories" class="fs-3">Category</label>
+        <select id="categories" name="cateID" class="rounded-2 ms-2">
           <option value="all">All</option>
           <% for (const category of categories) { %>
             <option value="<%= category.id %>"><%= category.title %></option>
           <% } %>
         </select>
+      </div>
 
-        <label for="price" class="fs-3 ms-2">Price</label>
-        <select name="price" id="price" class="mx-3 rounded-2" value="<%= price %>">
+      <div class="d-flex mt-3">
+        <label for="price" class="fs-3">Price</label>
+        <select name="price" id="price" class="mx-2 rounded-2">
           <option value="all">All</option>
           <option value="cheap">&lt; 100.000</option>
           <option value="medium">100.000 - 500.000</option>
@@ -44,32 +48,31 @@
       <% } %>
     </ul>
 
-    <nav aria-label="Page navigation example" class="mb-3">
-      <ul id="paging" class="pagination">
-        <li class="page-item">
-          <a class="btn btn-alt page-link rounded-0 rounded-start-2" href="/products?page=<%= page <= 1 ? 1 : page - 1 %>&name=<%= name %>&cateID=<%= cateID %>&price=<% price %>" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
+    
+    <ul class="pagination mb-3">
+      <li class="page-item">
+        <a class="btn btn-alt page-link rounded-0 rounded-start-2" href="/products?page=<%= page <= 1 ? 1 : page - 1 %>&name=<%= name %>&cateID=<%= cateID %>&price=<%= price %>" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
 
-        <% for (let i = 1; i <= total_page; ++i) { %>
-          <% if (i === page) { %>
-            <li class="page-item">
-              <a class="btn page-link rounded-0 text-bg-warning" href="/products?page=<%= i%>&name=<%= name %>&cateID=<%= cateID %>&price=<%= price %>"><%= i%></a>
-            </li>
-          <% } else { %>
-            <li class="page-item">
-              <a class="btn btn-alt rounded-0 page-link" href="/products?page=<%= i%>&name=<%= name %>&cateID=<%= cateID %>&price=<%= price %>"><%= i%></a>
-            </li>
-          <% } %>
+      <% for (let i = 1; i <= total_page; ++i) { %>
+        <% if (i === page) { %>
+          <li class="page-item">
+            <a class="btn page-link rounded-0 text-bg-warning" href="/products?page=<%= i%>&name=<%= name %>&cateID=<%= cateID %>&price=<%= price %>"><%= i%></a>
+          </li>
+        <% } else { %>
+          <li class="page-item">
+            <a class="btn btn-alt rounded-0 page-link" href="/products?page=<%= i%>&name=<%= name %>&cateID=<%= cateID %>&price=<%= price %>"><%= i%></a>
+          </li>
         <% } %>
+      <% } %>
 
-        <li class="page-item">
-          <a class="btn btn-alt page-link rounded-0 rounded-end-2" href="/products?page=<%= page >= total_page ? total_page : page + 1 %>&name=<%= name %>&cateID=<%= cateID %>&price=<%= price %>" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+      <li class="page-item">
+        <a class="btn btn-alt page-link rounded-0 rounded-end-2" href="/products?page=<%= page >= total_page ? total_page : page + 1 %>&name=<%= name %>&cateID=<%= cateID %>&price=<%= price %>" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
   </main>
 <%- include('../../shared/homepage/footer') %>

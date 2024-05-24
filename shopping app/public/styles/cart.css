@@ -42,7 +42,7 @@
   font-weight: normal;
 }
 
-@media (min-width: 48rem) {
+@media (min-width: 769px) {
   .cart-item {
     flex-direction: row;
     justify-content: space-between;
@@ -51,5 +51,5 @@
   #cart-total {
     flex-direction: row;
     justify-content: space-between;
-  }  
+  }
 }

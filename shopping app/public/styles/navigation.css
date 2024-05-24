@@ -36,7 +36,7 @@ main {
 }
 
 .nav-items li {
-  margin: 0 var(--space-2);
+  margin: var(--space-1) var(--space-2);
 }
 
 .nav-items button {
@@ -80,6 +80,7 @@ main {
 
 #mobile-menu.open {
   display: flex;
+  z-index: 1;
 }
 
 #mobile-menu nav {
@@ -94,7 +95,7 @@ main {
   color: var(--color-primary-100);
 }
 
-@media (min-width: 48rem) {
+@media (min-width: 769px) {
   main {
     margin-top: 0;
   }
@@ -116,7 +117,7 @@ main {
     display: none;
   }
 
-  #mobile-menu {
+  #mobile-menu.open {
     display: none;
   }
 
