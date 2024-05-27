@@ -16,7 +16,7 @@
       <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
       <p>
         <label for="username">Username</label>
-        <input type="text" id="username" name="username" value="<%= inputData.username %>" required>
+        <input type="text" id="username" name="username" value="<%= inputData.username %>"  required>
       </p>
       <p>
         <label for="password">Password</label>
@@ -29,11 +29,11 @@
       <hr>
       <p>
         <label for="fullname">Full Name</label>
-        <input type="text" id="fullname" name="fullname" value="<%= inputData.fullname %>" required>
+        <input type="text" id="fullname" name="fullname" value="<%= inputData.fullname %>"  required>
       </p>
       <p>
         <label for="street">Street</label>
-        <input type="text" id="street" name="street" value="<%= inputData.street %>" required>
+        <input type="text" id="street" name="street" value="<%= inputData.street %>"  required>
       </p>
       <p>
         <label for="postal">Postal Code</label>
@@ -44,13 +44,14 @@
           minlength="5" 
           maxlength="5" 
           value="<%= inputData.postal %>"
+          
           required>
       </p>
       <p>
         <label for="city">City</label>
-        <input type="text" id="city" name="city" value="<%= inputData.city %>" required>
+        <input type="text" id="city" name="city" value="<%= inputData.city %>"  required>
       </p>
-      <button class="btn">Create Account</button>
+      <button class="btn btn-solid">Create Account</button>
       <p id="switch-form" class="mt-2"><a href="/login">Login instead</a></p>
     </form>
   </main>

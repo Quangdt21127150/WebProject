@@ -19,10 +19,10 @@
 
   <% if (locals.isAdmin) { %>
     <section class="order-actions">
-      <form>
+      <form class="d-flex">
         <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
         <input type="hidden" name="orderid" value="<%= order.id %>">
-        <select name="status">
+        <select name="status" class="me-2">
           <option value="pending" <% if (order.status === 'pending') { %>selected<% } %>>Pending</option>
           <option value="fulfilled" <% if (order.status === 'fulfilled') { %>selected<% } %>>Fulfilled</option>
           <option value="cancelled" <% if (order.status === 'cancelled') { %>selected<% } %>>Cancelled</option>

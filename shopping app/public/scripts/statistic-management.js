@@ -21,7 +21,7 @@ function drawLineChart(data, chart_title, xValues) {
           backgroundColor: "green",
           data: yValues,
           borderWidth: 1,
-          borderColor: "white",
+          borderColor: "gray",
           hoverBorderWidth: 3,
         },
       ],
@@ -30,20 +30,20 @@ function drawLineChart(data, chart_title, xValues) {
       title: {
         display: true,
         text: chart_title, // Tiêu đề của biểu đồ
-        fontColor: "white", // Màu của tiêu đề
+        fontColor: "gray", // Màu của tiêu đề
         fontSize: 20, // Kích thước chữ của tiêu đề
       },
       legend: {
         position: "bottom",
         labels: {
-          fontColor: "white",
+          fontColor: "gray",
         },
       },
       scales: {
         xAxes: [
           {
             ticks: {
-              fontColor: "white", // Màu số liệu trên trục X
+              fontColor: "gray", // Màu số liệu trên trục X
             },
             gridLines: {
               color: "rgba(255, 255, 255, 0.2)", // Màu của đường kẻ trục X
@@ -54,7 +54,7 @@ function drawLineChart(data, chart_title, xValues) {
           {
             ticks: {
               beginAtZero: true,
-              fontColor: "white", // Màu số liệu trên trục Y
+              fontColor: "gray", // Màu số liệu trên trục Y
             },
             gridLines: {
               color: "rgba(255, 255, 255, 0.2)", // Màu của đường kẻ trục Y
@@ -80,7 +80,7 @@ function drawStackedBarChart(data, chart_title, xValues) {
       }, 0.5)`,
       data: product[1],
       borderWidth: 1,
-      borderColor: "white",
+      borderColor: "gray",
       hoverBorderWidth: 3,
     });
   }
@@ -95,20 +95,20 @@ function drawStackedBarChart(data, chart_title, xValues) {
       title: {
         display: true,
         text: chart_title, // Tiêu đề của biểu đồ
-        fontColor: "white", // Màu của tiêu đề
+        fontColor: "gray", // Màu của tiêu đề
         fontSize: 20, // Kích thước chữ của tiêu đề
       },
       legend: {
         position: "bottom",
         labels: {
-          fontColor: "white",
+          fontColor: "gray",
         },
       },
       scales: {
         xAxes: [
           {
             ticks: {
-              fontColor: "white", // Màu số liệu trên trục X
+              fontColor: "gray", // Màu số liệu trên trục X
               autoSkip: false, // Không tự động bỏ qua các nhãn
               maxRotation: 0,
             },
@@ -122,7 +122,7 @@ function drawStackedBarChart(data, chart_title, xValues) {
           {
             ticks: {
               beginAtZero: true,
-              fontColor: "white", // Màu số liệu trên trục Y
+              fontColor: "gray", // Màu số liệu trên trục Y
             },
             gridLines: {
               color: "rgba(255, 255, 255, 0.2)", // Màu của đường kẻ trục Y

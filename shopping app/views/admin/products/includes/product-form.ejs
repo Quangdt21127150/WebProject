@@ -10,6 +10,7 @@
       id="title"
       name="title"
       value="<%= product.title %>"
+      
       required
     />
   </p>
@@ -41,6 +42,7 @@
       id="summary"
       name="summary"
       value="<%= product.summary %>"
+      
       required
       maxlength="250"
     />
@@ -55,6 +57,7 @@
       value="<%= product.price %>"
       min="0.01"
       step="0.01"
+      
       required
     />
   </p>
@@ -66,6 +69,6 @@
 
   <p>
     <button type="reset" class="btn btn-alt">Reset</button>
-    <button class="btn">Save</button>
+    <button class="btn btn-solid">Save</button>
   </p>
 </form>

@@ -14,7 +14,7 @@
 .product-item {
   border-radius: var(--border-radius-medium);
   text-align: center;
-  background-color: var(--color-gray-600);
+  background-color: var(--color-gray-400);
   overflow: hidden;
 }
 
@@ -26,6 +26,7 @@
 
 .product-item-content {
   padding: var(--space-4);
+  color: var(--color-gray-100);
 }
 
 .product-item-content h2 {
@@ -64,6 +65,11 @@
   background-color: var(--color-primary-500-bg);
   padding: var(--space-8);
   white-space: pre-wrap;
+}
+
+.page-item a:hover,
+.page-item a:active {
+  color: white;
 }
 
 @media (min-width: 769px) {

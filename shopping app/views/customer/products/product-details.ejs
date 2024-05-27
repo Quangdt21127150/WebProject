@@ -10,13 +10,13 @@
       <article id="product-info">
         <h1><%= product.title %></h1>
         <p><%= product.price %> VND</p>
-        <button class="btn" data-productid="<%= product.id %>" data-csrf="<%= locals.csrfToken %>">Add to Cart</button>
+        <button class="btn btn-solid" data-productid="<%= product.id %>" data-csrf="<%= locals.csrfToken %>">Add to Cart</button>
       </article>
     </header>
     
     <p id="product-description"><%= product.description %></p>
 
-    <p class="text-warning fw-bold">RELATED PRODUCTS</p>
+    <p class="fw-bold">RELATED PRODUCTS</p>
 
     <div id="carouselExample" class="carousel slide">
       <div class="carousel-inner">

@@ -10,7 +10,7 @@
       <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>" />
       <div class="d-flex mt-3">
         <input type="search" name="name" class="form-control rounded-end-0" placeholder="Search" value="<%= name %>"/>
-        <button type="submit" class="border border-primary bg-primary rounded-end-1 p-2">
+        <button type="submit" class="btn btn-solid rounded-0 rounded-end-1 p-2">
           <i class="fas fa-search text-white"></i>
         </button>
       </div>
@@ -34,7 +34,7 @@
           <option value="expensive">&gt; 500.000</option>
         </select>
 
-        <button type="submit" class="border border-primary bg-primary rounded-1 p-2 ms-1">
+        <button type="submit" class="btn btn-solid p-2 ms-1">
           <i class="fa-solid fa-filter text-white"></i>
         </button>
       </div>
@@ -51,7 +51,7 @@
     
     <ul class="pagination mb-3">
       <li class="page-item">
-        <a class="btn btn-alt page-link rounded-0 rounded-start-2" href="/products?page=<%= page <= 1 ? 1 : page - 1 %>&name=<%= name %>&cateID=<%= cateID %>&price=<%= price %>" aria-label="Previous">
+        <a class="btn btn-alt rounded-0 rounded-start-2 page-link" href="/products?page=<%= page <= 1 ? 1 : page - 1 %>&name=<%= name %>&cateID=<%= cateID %>&price=<%= price %>" aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
         </a>
       </li>
@@ -59,7 +59,7 @@
       <% for (let i = 1; i <= total_page; ++i) { %>
         <% if (i === page) { %>
           <li class="page-item">
-            <a class="btn page-link rounded-0 text-bg-warning" href="/products?page=<%= i%>&name=<%= name %>&cateID=<%= cateID %>&price=<%= price %>"><%= i%></a>
+            <a class="btn btn-solid rounded-0 page-link" href="/products?page=<%= i%>&name=<%= name %>&cateID=<%= cateID %>&price=<%= price %>"><%= i%></a>
           </li>
         <% } else { %>
           <li class="page-item">
@@ -69,7 +69,7 @@
       <% } %>
 
       <li class="page-item">
-        <a class="btn btn-alt page-link rounded-0 rounded-end-2" href="/products?page=<%= page >= total_page ? total_page : page + 1 %>&name=<%= name %>&cateID=<%= cateID %>&price=<%= price %>" aria-label="Next">
+        <a class="btn btn-alt rounded-0 rounded-end-2 page-link" href="/products?page=<%= page >= total_page ? total_page : page + 1 %>&name=<%= name %>&cateID=<%= cateID %>&price=<%= price %>" aria-label="Next">
           <span aria-hidden="true">&raquo;</span>
         </a>
       </li>

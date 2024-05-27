@@ -6,7 +6,7 @@
   <main>
     <h1 class="my-2">Product Management</h1>   
     <p>
-      <a href="/admin/products/new/<%= category_id %>" class="btn mt-3">Add Product</a>
+      <a href="/admin/products/new/<%= category_id %>" class="btn btn-solid mt-3">Add Product</a>
     </p>
 
     <ul id="products-grid">
@@ -19,7 +19,7 @@
 
     <ul class="pagination mb-3">
       <li class="page-item">
-        <a class="btn btn-alt page-link rounded-start-2" href="/categories/<%= category_id %>?page=<%= page <= 1 ? 1 : page - 1 %>" aria-label="Previous">
+        <a class="btn btn-alt rounded-0 rounded-start-2 page-link" href="/categories/<%= category_id %>?page=<%= page <= 1 ? 1 : page - 1 %>" aria-label="Previous">
           <span aria-hidden="true">&laquo;</span>
         </a>
       </li>
@@ -27,17 +27,17 @@
       <% for (let i = 1; i <= total_page; ++i) { %>
         <% if (i === page) { %>
           <li class="page-item">
-            <a class="btn page-link rounded-0 text-bg-warning" href="/categories/<%= category_id %>?page=<%= i%>"><%= i%></a>
+            <a class="btn btn-solid rounded-0 page-link" href="/categories/<%= category_id %>?page=<%= i%>"><%= i%></a>
           </li>
         <% } else { %>
           <li class="page-item">
-            <a class="btn btn-alt page-link rounded-0" href="/categories/<%= category_id %>?page=<%= i%>"><%= i%></a>
+            <a class="btn btn-alt rounded-0 page-link" href="/categories/<%= category_id %>?page=<%= i%>"><%= i%></a>
           </li>
         <% } %>
       <% } %>
 
       <li class="page-item">
-        <a class="btn btn-alt page-link rounded-0 rounded-end-2" href="/categories/<%= category_id %>?page=<%= page >= total_page ? total_page : page + 1 %>" aria-label="Next">
+        <a class="btn btn-alt rounded-0 rounded-end-2 page-link" href="/categories/<%= category_id %>?page=<%= page >= total_page ? total_page : page + 1 %>" aria-label="Next">
           <span aria-hidden="true">&raquo;</span>
         </a>
       </li>
