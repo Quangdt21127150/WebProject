@@ -12,7 +12,7 @@
         <p><%= inputData.errorMessage %></p>
       </section>
     <% } %>
-    <form action="/login" method="POST">
+    <form action="/login" method="POST" class="form">
       <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
 
       <p>

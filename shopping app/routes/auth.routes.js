@@ -31,12 +31,19 @@ passport.use(
       callbackURL: process.env.GOOGLE_CALLBACK_URL,
     },
     async function (accessToken, refreshToken, profile, done) {
-      myEmitter.setMaxListeners(15);
       const user = await User.findByUsername(profile.emails[0].value);
 
       if (!user) {
         console.log("Adding new Google account");
-        const user = new User(profile.emails[0].value, "?", "?", "?", "?", "?", "");
+        const user = new User(
+          profile.emails[0].value,
+          "",
+          "?",
+          "?",
+          "?",
+          "?",
+          ""
+        );
         await user.signup(false);
       } else {
         console.log("Google User already exist in DB");
@@ -52,20 +59,27 @@ passport.use(
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
       callbackURL: process.env.FACEBOOK_CALLBACK_URL,
+      profileFields: ["id", "displayName", "emails"],
     },
-    async function (accesToken, refreshToken, profile, cb) {
-      myEmitter.setMaxListeners(15);
+    async function (accesToken, refreshToken, profile, done) {
       const user = await User.findByUsername(profile.emails[0].value);
 
       if (!user) {
         console.log("Adding new facebook account");
-        const user = new User(profile.emails[0].value, "?", "?", "?", "?", "?", "");
+        const user = new User(
+          profile.emails[0].value,
+          "",
+          profile.displayName,
+          "?",
+          "?",
+          "?",
+          ""
+        );
         await user.signup(false);
-        return cb(null, profile);
       } else {
         console.log("Facebook User already exist in DB");
-        return cb(null, profile);
       }
+      return done(null, profile);
     }
   )
 );
@@ -118,13 +132,11 @@ router.get(
     failureRedirect: "/login",
   }),
   function (req, res) {
-    res.redirect("/auth/success2");
+    res.redirect("/auth/success");
   }
 );
 
-router.get("/auth/success", authController.googleLogin);
-
-router.get("/auth/success2", authController.facebookLogin);
+router.get("/auth/success", authController.successLogin);
 
 router.post("/logout", authController.logout);
 
