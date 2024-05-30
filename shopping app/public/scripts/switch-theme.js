@@ -1,5 +1,5 @@
 const switch_button = document.querySelector("#switchCheck");
-const body_tag = document.querySelector("body");
+const body_tag = document.body;
 const main_header = document.querySelector("#main-header");
 const nav_items = main_header.querySelectorAll("a");
 const badges = document.querySelectorAll(".badge");
@@ -15,8 +15,8 @@ const labels = document.querySelectorAll("label");
 const mobile_menu = document.querySelector("#mobile-menu");
 const nav_items_mobile = mobile_menu.querySelectorAll("a");
 
-switch_button.addEventListener("click", function () {
-  if (this.checked) {
+function setTheme() {
+  if (switch_button.checked) {
     body_tag.style.backgroundColor = "white";
     body_tag.style.color = "black";
     main_header.style.backgroundColor = "white";
@@ -109,4 +109,12 @@ switch_button.addEventListener("click", function () {
       switch_form.querySelector("a").style.color = "var(--color-primary-500)";
     }
   }
+  localStorage.clear();
+  localStorage.setItem("theme", switch_button.checked);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  switch_button.checked = localStorage.getItem("theme") === "true";
+  setTheme();
 });
+switch_button.addEventListener("click", setTheme);
