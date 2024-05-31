@@ -62,14 +62,14 @@
 }
 
 #product-description {
-  background-color: var(--color-primary-500-bg);
+  background-color: var(--color-gray-400);
   padding: var(--space-8);
   white-space: pre-wrap;
 }
 
 .page-item a:hover,
 .page-item a:active {
-  color: white;
+  color: var(--color-primary-500-contrast);
 }
 
 @media (min-width: 769px) {
@@ -117,4 +117,10 @@
 
 .carousel-control-next {
   right: -7%;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: var(--color-gray-500);
+  border-radius: var(--border-radius-circle);
 }

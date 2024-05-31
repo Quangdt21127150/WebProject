@@ -55,10 +55,22 @@ class Product {
   }
 
   static async findByName(name) {
+    const product = await db
+      .getDb()
+      .collection("products")
+      .findOne({ title: name });
+
+    if (!product) {
+      return new Product("");
+    }
+    return new Product(product);
+  }
+
+  static async findByInputString(string) {
     const all_products = await Product.findAll();
 
     const products = all_products.filter((product) =>
-      product.title.toLowerCase().includes(name.toLowerCase())
+      product.title.toLowerCase().includes(string.toLowerCase())
     );
 
     return products.map(function (productDocument) {

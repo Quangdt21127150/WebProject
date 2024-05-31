@@ -1,5 +1,6 @@
 const Category = require("../models/category.model");
 const Product = require("../models/product.model");
+const Order = require("../models/order.model");
 
 function mergeProducts(p_root, p_temp) {
   let products = [];
@@ -19,9 +20,41 @@ async function getProducts(req, res, next) {
     const name = req.query.name || "";
     const cateID = req.query.cateID || "all";
     const price = req.query.price || "all";
+
+    /* Get bestseller */
+    let quantityOfProducts = new Map();
+    const orders = await Order.findAll();
+    for (let order of orders) {
+      if (order.status === "fulfilled") {
+        for (let item of order.productData.items) {
+          if (!quantityOfProducts.has(item.product.title)) {
+            quantityOfProducts.set(item.product.title, 0);
+          }
+          quantityOfProducts.set(
+            item.product.title,
+            quantityOfProducts.get(item.product.title) + item.quantity
+          );
+        }
+      }
+    }
+    quantityOfProducts = Array.from(quantityOfProducts.entries())
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5);
+    for (let i = quantityOfProducts.length; i < 5; ++i) {
+      quantityOfProducts.push(["-1", 0]);
+    }
+    const bestseller = [
+      await Product.findByName(quantityOfProducts[0][0]),
+      await Product.findByName(quantityOfProducts[1][0]),
+      await Product.findByName(quantityOfProducts[2][0]),
+      await Product.findByName(quantityOfProducts[3][0]),
+      await Product.findByName(quantityOfProducts[4][0]),
+    ];
+
+    /*Search and filter*/
     let products = await Product.findAll();
     if (name !== "") {
-      products = mergeProducts(products, await Product.findByName(name));
+      products = mergeProducts(products, await Product.findByInputString(name));
     }
     if (cateID !== "all") {
       products = mergeProducts(products, await Product.findByCateId(cateID));
@@ -40,6 +73,7 @@ async function getProducts(req, res, next) {
       );
     }
 
+    /*Pagination*/
     let page = parseInt(req.query.page) || 1,
       per_page = 6,
       total_page = Math.ceil(products.length / per_page),
@@ -50,6 +84,7 @@ async function getProducts(req, res, next) {
     }
 
     res.render("customer/products/all-products", {
+      bestseller: bestseller,
       categories: categories,
       products: products,
       page: page,

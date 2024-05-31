@@ -11,11 +11,11 @@ form {
   text-align: center;
 }
 
-form a {
+#switch-form a {
   color: var(--color-primary-200);
 }
 
-form a:hover,
-form a:active {
-  color: var(--color-primary-400);
+#switch-form a:hover,
+#switch-form a:active {
+  color: blue !important;
 }

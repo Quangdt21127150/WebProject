@@ -35,6 +35,7 @@ html {
 
   --border-radius-small: 4px;
   --border-radius-medium: 6px;
+  --border-radius-circle: 50%;
 
   --shadow-medium: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
@@ -60,7 +61,6 @@ ol {
 
 a {
   text-decoration: none;
-  color: var(--color-primary-400);
 }
 
 .btn {
