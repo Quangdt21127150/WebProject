@@ -66,54 +66,6 @@ class Product {
     return new Product(product);
   }
 
-  static async findByInputString(string) {
-    const all_products = await Product.findAll();
-
-    const products = all_products.filter((product) =>
-      product.title.toLowerCase().includes(string.toLowerCase())
-    );
-
-    return products.map(function (productDocument) {
-      return new Product(productDocument);
-    });
-  }
-
-  static async findLowerPrice(price) {
-    const products = await db
-      .getDb()
-      .collection("products")
-      .find({ price: { $lt: price } })
-      .toArray();
-
-    return products.map(function (productDocument) {
-      return new Product(productDocument);
-    });
-  }
-
-  static async findGreaterPrice(price) {
-    const products = await db
-      .getDb()
-      .collection("products")
-      .find({ price: { $gt: price } })
-      .toArray();
-
-    return products.map(function (productDocument) {
-      return new Product(productDocument);
-    });
-  }
-
-  static async findInPriceRange(min, max) {
-    const products = await db
-      .getDb()
-      .collection("products")
-      .find({ $and: [{ price: { $gte: min } }, { price: { $lte: max } }] })
-      .toArray();
-
-    return products.map(function (productDocument) {
-      return new Product(productDocument);
-    });
-  }
-
   static async findAll() {
     const products = await db.getDb().collection("products").find().toArray();
 

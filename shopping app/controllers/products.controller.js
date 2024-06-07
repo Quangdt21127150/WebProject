@@ -2,18 +2,6 @@ const Category = require("../models/category.model");
 const Product = require("../models/product.model");
 const Order = require("../models/order.model");
 
-function mergeProducts(p_root, p_temp) {
-  let products = [];
-  for (let r of p_root) {
-    for (let t of p_temp) {
-      if (r.title === t.title) {
-        products.push(r);
-      }
-    }
-  }
-  return products;
-}
-
 async function getProducts(req, res, next) {
   try {
     const categories = await Category.findAll();
@@ -52,25 +40,27 @@ async function getProducts(req, res, next) {
     ];
 
     /*Search and filter*/
-    let products = await Product.findAll();
-    if (name !== "") {
-      products = mergeProducts(products, await Product.findByInputString(name));
-    }
+    let products;
     if (cateID !== "all") {
-      products = mergeProducts(products, await Product.findByCateId(cateID));
+      products = await Product.findByCateId(cateID);
+    } else {
+      products = await Product.findAll();
     }
+
+    if (name !== "") {
+      products = products.filter((product) =>
+        product.title.toLowerCase().includes(name.toLowerCase())
+      );
+    }
+
     if (price === "cheap") {
-      products = mergeProducts(products, await Product.findLowerPrice(100000));
+      products = products.filter((product) => product.price < 100000);
     } else if (price === "medium") {
-      products = mergeProducts(
-        products,
-        await Product.findInPriceRange(100000, 500000)
+      products = products.filter(
+        (product) => product.price >= 100000 && product.price <= 500000
       );
     } else if (price === "expensive") {
-      products = mergeProducts(
-        products,
-        await Product.findGreaterPrice(500000)
-      );
+      products = products.filter((product) => product.price > 500000);
     }
 
     /*Pagination*/

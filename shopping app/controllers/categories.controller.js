@@ -4,7 +4,7 @@ const Product = require("../models/product.model");
 async function getAllCategories(req, res, next) {
   try {
     const categories = await Category.findAll();
-    
+
     res.render("admin/categories/all-categories", {
       categories: categories,
     });
@@ -15,6 +15,7 @@ async function getAllCategories(req, res, next) {
 
 async function getProductsOfCategory(req, res, next) {
   try {
+    const category = await Category.findById(req.params.cateID);
     const products = await Product.findByCateId(req.params.cateID);
 
     let page = parseInt(req.query.page) || 1,
@@ -26,9 +27,9 @@ async function getProductsOfCategory(req, res, next) {
       end = products.length;
     }
 
-    res.render("admin/products/all-products", {
+    res.render("admin/products/products-by-category", {
       products: products,
-      category_id: req.params.cateID,
+      category: category,
       page: page,
       start: start,
       end: end,

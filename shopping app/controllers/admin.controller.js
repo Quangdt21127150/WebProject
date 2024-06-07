@@ -87,19 +87,6 @@ async function createNewProduct(req, res, next) {
   res.redirect(`/categories/${product.cateId}`);
 }
 
-async function getUpdateProduct(req, res, next) {
-  try {
-    const product = await Product.findById(req.params.id);
-    const category = await Category.findById(product.cateId);
-    res.render("admin/products/update-product", {
-      product: product,
-      category: category,
-    });
-  } catch (error) {
-    next(error);
-  }
-}
-
 async function updateProduct(req, res, next) {
   const product = new Product({
     ...req.body,
@@ -334,7 +321,6 @@ module.exports = {
 
   getNewProduct: getNewProduct,
   createNewProduct: createNewProduct,
-  getUpdateProduct: getUpdateProduct,
   updateProduct: updateProduct,
   deleteProduct: deleteProduct,
 

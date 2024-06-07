@@ -9,16 +9,18 @@
       Sales Statistics
     </h1>
     <section class="d-flex my-3">
-      <label for="time" class="fs-3 me-2">Time range</label>
+      <label for="time" class="fs-3 me-2"><i class="fa-solid fa-clock"></i> Time range</label>
       <select name="time" id="time" class="rounded-2">
-        <option value="month">By month in current year</option>
-        <option value="year">The last 10 year</option>
+        <option value="month">By months in current year</option>
+        <option value="year">The last 10 years</option>
       </select>
 
       <button class="btn btn-solid mx-3" data-csrf="<%= locals.csrfToken %>" id="revenue">
+        <i class="fa-solid fa-dollar-sign me-1"></i>
         Revenue
       </button>
       <button class="btn btn-solid" data-csrf="<%= locals.csrfToken %>" id="quantity">
+        <i class="fa-solid fa-boxes-stacked me-1"></i>
         Quantity
       </button>
     </section>

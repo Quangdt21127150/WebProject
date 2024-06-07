@@ -1,8 +1,8 @@
-const mobileMenuBtnElement = document.getElementById('mobile-menu-btn');
-const mobileMenuElement = document.getElementById('mobile-menu');
+const mobileMenuBtnElement = $("#mobile-menu-btn");
+const mobileMenuElement = $("#mobile-menu");
 
 function toggleMobileMenu() {
-  mobileMenuElement.classList.toggle('open');
+  mobileMenuElement.toggleClass("open");
 }
 
-mobileMenuBtnElement.addEventListener('click', toggleMobileMenu);
+mobileMenuBtnElement.click(toggleMobileMenu);

@@ -58,17 +58,19 @@ class Order {
     return this.transformOrderDocuments(orders);
   }
 
-  static async findAllPendingForUser(userId) {
+  static async findByPendingStatus(userId) {
     const uid = new mongodb.ObjectId(userId);
 
-    const orders = await db
+    const order = await db
       .getDb()
       .collection("orders")
-      .find({ $and: [{ "userData._id": uid }, { status: "pending" }] })
-      .sort({ _id: -1 })
-      .toArray();
+      .findOne({ $and: [{ "userData._id": uid }, { status: "pending" }] });
 
-    return this.transformOrderDocuments(orders);
+    if (order) {
+      return this.transformOrderDocument(order);
+    } else {
+      return null;
+    }
   }
 
   static async findById(orderId) {

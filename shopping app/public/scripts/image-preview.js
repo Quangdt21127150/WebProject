@@ -1,18 +1,17 @@
-const imagePickerElement = document.querySelector('#image-upload-control input');
-const imagePreviewElement = document.querySelector('#image-upload-control img');
+const imagePickerElement = $("#image-upload-control input");
+const imagePreviewElement = $("#image-upload-control img");
 
 function updateImagePreview() {
-  const files = imagePickerElement.files;
+  const files = imagePickerElement[0].files;
 
   if (!files || files.length === 0) {
-    imagePreviewElement.style.display = 'none';
+    imagePreviewElement.hide();
     return;
   }
 
   const pickedFile = files[0];
 
-  imagePreviewElement.src = URL.createObjectURL(pickedFile);
-  imagePreviewElement.style.display = 'block';
+  imagePreviewElement.attr("src", URL.createObjectURL(pickedFile)).show();
 }
 
-imagePickerElement.addEventListener('change', updateImagePreview);
+imagePickerElement.change(updateImagePreview);

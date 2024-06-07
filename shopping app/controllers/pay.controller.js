@@ -51,7 +51,7 @@ async function createNewPaymentAccount(req, res, next) {
   }
 
   if (req.query.login === "3") {
-    res.redirect("https://localhost:3000/products?page=1");
+    res.redirect("https://localhost:3000/products");
     return;
   }
 
@@ -114,7 +114,9 @@ async function transfer(req, res, next) {
 
   await account.save(customer.username);
 
-  res.redirect("https://localhost:3000/orders");
+  res.redirect(
+    `https://localhost:3000/cart?isPaid=0&customer=${customer.username}&surplus=${customer_surplus}`
+  );
 }
 
 module.exports = {

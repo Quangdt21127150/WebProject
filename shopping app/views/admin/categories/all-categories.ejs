@@ -1,4 +1,6 @@
 <%- include('../../shared/homepage/head', { pageTitle: 'All Categories' }) %>
+<script src="/scripts/image-preview.js" defer></script>
+
 </head>
 <body>
   <%- include('../../shared/homepage/header') %>
@@ -6,7 +8,14 @@
     <h1 class="my-2">Category Management</h1>
     <section>
       <p>
-        <a href="/admin/categories/new" class="btn btn-solid mt-3">Add Category</a>
+        <button type="button" class="btn btn-solid mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <i class="fa-solid fa-circle-plus me-1"></i>
+          Add Category
+        </button>
+
+        <%- include('includes/category-form', { submitPath: '/admin/categories', title: 'Add new category', i: '', category: {
+          title: ''
+        }}) %>
       </p>
     </section>
     <section>
@@ -23,9 +32,15 @@
               <td><%= category.title %></td>
               <td>
                 <section class="d-inline-flex">
-                  <a class="btn btn-alt" href="/admin/categories/<%= category.id %>">
+                  <% const i = categories.indexOf(category) %>
+                  <button
+                    type="button"
+                    class="btn btn-alt"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal<%= i %>"
+                  >
                     <i class="fa-solid fa-pen-to-square"></i>
-                  </a>
+                  </button>
   
                   <form action="/admin/categories/delete/<%= category.id %>" method="POST">
                     <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>" />
@@ -40,6 +55,7 @@
                 </section>
               </td>
             </tr>
+            <%- include('includes/category-form', { submitPath: '/admin/categories/' + category.id, title: 'Update category', i: i, category: category }) %>
           <% } %>
         </tbody>
       </table>

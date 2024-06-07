@@ -1,7 +1,7 @@
-const Product = require('../models/product.model');
+const Product = require("../models/product.model");
 
 async function getCart(req, res) {
-  res.render('customer/cart/cart');
+  res.render("customer/cart/cart");
 }
 
 async function addCartItem(req, res, next) {
@@ -19,7 +19,7 @@ async function addCartItem(req, res, next) {
   req.session.cart = cart;
 
   res.status(201).json({
-    message: 'Cart updated!',
+    message: "Cart updated!",
     newTotalItems: cart.totalQuantity,
   });
 }
@@ -35,7 +35,7 @@ function updateCartItem(req, res) {
   req.session.cart = cart;
 
   res.json({
-    message: 'Item updated!',
+    message: "Item updated!",
     updatedCartData: {
       newTotalQuantity: cart.totalQuantity,
       newTotalPrice: cart.totalPrice,

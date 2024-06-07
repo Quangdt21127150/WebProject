@@ -1,8 +1,7 @@
-const revenueButton = document.querySelector("#revenue");
-const quantityButton = document.querySelector("#quantity");
+const revenueButton = $("#revenue");
+const quantityButton = $("#quantity");
 const currentYear = new Date().getFullYear();
-
-let currentChart = null; // Biến để lưu trữ đối tượng biểu đồ hiện tại
+let currentChart = null;
 
 function drawLineChart(data, chart_title, xValues) {
   if (currentChart) {
@@ -135,13 +134,12 @@ function drawStackedBarChart(data, chart_title, xValues) {
   });
 }
 
-async function getRevenue(event) {
-  const buttonElement = event.target;
-  const csrfToken = buttonElement.dataset.csrf;
-  const timeSelect = document.querySelector("#time").value;
+async function getChartData(event, url, chart_title) {
+  const buttonElement = $(event.target);
+  const csrfToken = buttonElement.data("csrf");
+  const timeSelect = $("#time").val();
+
   let xValues = [];
-  let url = "";
-  let chart_title = "";
   if (timeSelect === "month") {
     xValues = [
       "January",
@@ -157,16 +155,16 @@ async function getRevenue(event) {
       "November",
       "December",
     ];
-    chart_title = `Revenue by month in the year ${currentYear}`;
+    chart_title += "by months in the year " + currentYear;
   } else {
     for (let year = currentYear - 9; year <= currentYear; ++year) {
       xValues.push(year);
     }
-    url = "2";
-    chart_title = "Revenue in the last 10 year";
+    url += "2";
+    chart_title += "in the last 10 year";
   }
 
-  await fetch("/admin/revenue" + url + "?_csrf=" + csrfToken, {
+  await fetch(url + "?_csrf=" + csrfToken, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -174,52 +172,18 @@ async function getRevenue(event) {
   })
     .then((response) => response.json())
     .then((data) => {
-      drawLineChart(data.data, chart_title, xValues);
+      if (chart_title[0] === "R") {
+        drawLineChart(data.data, chart_title, xValues);
+      } else {
+        drawStackedBarChart(data.data, chart_title, xValues);
+      }
     });
 }
 
-async function getQuantity(event) {
-  const buttonElement = event.target;
-  const csrfToken = buttonElement.dataset.csrf;
-  const timeSelect = document.querySelector("#time").value;
-  let xValues = [];
-  let url = "";
-  let chart_title = "";
-  if (timeSelect === "month") {
-    xValues = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-    chart_title = `Number of products sold by month in the year ${currentYear}`;
-  } else {
-    for (let year = currentYear - 9; year <= currentYear; ++year) {
-      xValues.push(year);
-    }
-    url = "2";
-    chart_title = "Number of products sold in the last 10 year";
-  }
+revenueButton.click(function (event) {
+  getChartData(event, "/admin/revenue", "Revenue ");
+});
 
-  await fetch("/admin/quantity" + url + "?_csrf=" + csrfToken, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      drawStackedBarChart(data.data, chart_title, xValues);
-    });
-}
-
-revenueButton.addEventListener("click", getRevenue);
-quantityButton.addEventListener("click", getQuantity);
+quantityButton.click(function (event) {
+  getChartData(event, "/admin/quantity", "Number of products sold ");
+});

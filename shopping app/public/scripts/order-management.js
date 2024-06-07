@@ -1,45 +1,36 @@
-const updateOrderFormElements = document.querySelectorAll(
-  ".order-actions form"
-);
-
-async function updateOrder(event) {
-  event.preventDefault();
-  const form = event.target;
-
-  const formData = new FormData(form);
+$(".order-actions form select").change(function () {
+  const form = $(this).closest("form");
+  const formData = new FormData(form[0]);
   const newStatus = formData.get("status");
   const orderId = formData.get("orderid");
   const csrfToken = formData.get("_csrf");
 
-  let response;
-
-  try {
-    response = await fetch(`/admin/orders/${orderId}`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        newStatus: newStatus,
-        _csrf: csrfToken,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
+  fetch(`/admin/orders/${orderId}`, {
+    method: "PATCH",
+    body: JSON.stringify({
+      newStatus: newStatus,
+      _csrf: csrfToken,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(
+          "Something went wrong - could not update order status."
+        );
+      }
+      return response.json();
+    })
+    .then((responseData) => {
+      form
+        .parent()
+        .parent()
+        .find(".badge")
+        .text(responseData.newStatus.toUpperCase());
+    })
+    .catch((error) => {
+      alert(error.message);
     });
-  } catch (error) {
-    alert("Something went wrong - could not update order status.");
-    return;
-  }
-
-  if (!response.ok) {
-    alert("Something went wrong - could not update order status.");
-    return;
-  }
-
-  const responseData = await response.json();
-
-  form.parentElement.parentElement.querySelector(".badge").textContent =
-    responseData.newStatus.toUpperCase();
-}
-
-for (const updateOrderFormElement of updateOrderFormElements) {
-  updateOrderFormElement.addEventListener("submit", updateOrder);
-}
+});
