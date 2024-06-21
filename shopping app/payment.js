@@ -6,7 +6,6 @@ const expressSession = require("express-session");
 const https = require("https");
 const cors = require("cors");
 const fs = require("fs");
-const jwt = require("jsonwebtoken");
 
 const opts = {
   requestCert: true,

@@ -1,6 +1,7 @@
 <%- include('../../shared/homepage/head', { pageTitle: 'All Products' }) %>
 <link rel="stylesheet" href="/styles/products.css">
 <script src="/scripts/image-preview.js" defer></script>
+<script src="/scripts/dropdown-change.js" defer></script>
 
 </head>
 <body>
@@ -43,8 +44,8 @@
         </button>
       </div>
 
-      <div class="d-flex mt-3">
-        <label for="categories" class="fs-3">Category</label>
+      <div class="d-flex mt-3" id="categoryDropdown">
+        <span class="fs-3">Category</span>
         <select id="categories" name="cateID" class="rounded-2 ms-2">
           <option value="all">All</option>
           <% for (const category of categories) { %>
@@ -53,18 +54,14 @@
         </select>
       </div>
 
-      <div class="d-flex mt-3">
-        <label for="price" class="fs-3">Price</label>
+      <div class="d-flex mt-3" id="priceDropdown">
+        <span class="fs-3">Price</span>
         <select name="price" id="price" class="mx-2 rounded-2">
           <option value="all">All</option>
           <option value="cheap" <%= price === 'cheap' ? 'selected' : '' %>>&lt; 100.000</option>
           <option value="medium" <%= price === 'medium' ? 'selected' : '' %>>100.000 - 500.000</option>
           <option value="expensive" <%= price === 'expensive' ? 'selected' : '' %>>&gt; 500.000</option>
         </select>
-
-        <button type="submit" class="btn btn-solid p-2 ms-1">
-          <i class="fa-solid fa-filter"></i>
-        </button>
       </div>
     </form>
   

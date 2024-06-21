@@ -47,15 +47,11 @@ async function createNewPaymentAccount(req, res, next) {
 
   if (req.query.login === "2") {
     res.redirect("https://localhost:3000/");
-    return;
-  }
-
-  if (req.query.login === "3") {
+  } else if (req.query.login === "3") {
     res.redirect("https://localhost:3000/products");
-    return;
+  } else {
+    res.redirect("https://localhost:3000/accounts");
   }
-
-  res.redirect("https://localhost:3000/accounts");
 }
 
 async function deletePaymentAccount(req, res, next) {

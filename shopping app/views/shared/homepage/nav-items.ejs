@@ -36,23 +36,34 @@
     </a>
   </li>
   <% } else { %>
-  <li>
-    <a href="/categories" class="d-flex flex-column">
-      <i class="fa-solid fa-layer-group text-center"></i>
-      Categories
-    </a>
-  </li>
-  <li>
-    <a href="/admin/orders" class="d-flex flex-column">
-      <i class="fa-solid fa-receipt text-center"></i>
-      Orders
-    </a>
-  </li>
-  <li>
-    <a href="/accounts" class="d-flex flex-column">
-      <i class="fa-solid fa-user-group text-center"></i>
-      Accounts
-    </a>
+  <li class="dropdown">
+    <article role="button" data-toggle="dropdown" class="d-flex flex-column">
+      <i class="fa-solid fa-list-check text-center"></i>
+      Management
+    </article>
+    <ul class="dropdown-menu">
+      <li>
+        <a href="/categories" class="d-flex gap-2">
+          <i class="fa-solid fa-layer-group mt-1"></i>
+          Categories
+        </a>
+      </li>
+      <li>
+        <a href="/admin/orders" class="d-flex" style="gap: var(--space-3)">
+          <i
+            class="fa-solid fa-receipt mt-1"
+            style="margin-left: var(--space-1)"
+          ></i>
+          Orders
+        </a>
+      </li>
+      <li>
+        <a href="/accounts" class="d-flex gap-2">
+          <i class="fa-solid fa-user-group mt-1"></i>
+          Accounts
+        </a>
+      </li>
+    </ul>
   </li>
   <li>
     <a href="/admin/statistic" class="d-flex flex-column">
@@ -70,7 +81,7 @@
   <li>
     <form action="/logout" method="POST">
       <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>" />
-      <button class="d-flex" id="btn-logout">
+      <button class="d-flex">
         <span></span>
         <span></span>
         <span></span>

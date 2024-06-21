@@ -72,7 +72,6 @@ buyProductButton.click(async () => {
       }),
     });
   } catch (error) {
-    console.log(error);
     alert("Something went wrong!!!");
     return;
   }

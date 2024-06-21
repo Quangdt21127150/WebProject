@@ -1,4 +1,4 @@
-const addToCartButtonElement = $("#product-details button");
+const addToCartButtonElement = $(".btn-solid");
 const cartBadgeElements = $(".nav-items .badge");
 
 async function addToCart() {

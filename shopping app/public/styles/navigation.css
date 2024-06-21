@@ -14,9 +14,6 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var(--color-primary-500);
-  background-color: var(--color-gray-500);
-  color: var(--color-primary-400);
 }
 
 #main-header nav {
@@ -163,11 +160,6 @@ main {
     display: block;
   }
 
-  .nav-items button {
-    color: var(--color-primary-500);
-    border-color: var(--color-primary-500);
-  }
-
   #mobile-menu-btn {
     display: none;
   }
@@ -180,7 +172,8 @@ main {
     flex-direction: row;
   }
 
-  .nav-items a {
+  .nav-items a,
+  .nav-items article {
     padding: var(--space-2) var(--space-4);
     position: relative;
     overflow: hidden;
@@ -200,11 +193,29 @@ main {
     transition: height 0.3s ease;
   }
 
+  .dropdown:hover .dropdown-menu {
+    display: block;
+    border-radius: 0;
+  }
+
+  .dropdown-menu li {
+    margin: 0;
+  }
+
+  .dropdown-menu a::before {
+    border-radius: 0;
+  }
+
   .nav-items a:hover::before {
     height: 100%;
   }
 
   .nav-items a:active {
     background-color: var(--color-primary-500-bg);
+  }
+
+  .nav-items button {
+    color: var(--color-primary-500);
+    border-color: var(--color-primary-500);
   }
 }

@@ -31,7 +31,6 @@
   <% } %>
 </article>
 
-<% if(locals.isAdmin) { %> <%-
-include('../../admin/products/includes/product-form', { submitPath:
-'/admin/products/' + product.id, title: 'Update product', i: i, product:
-product, category: category, imageRequired: false }) %> <% } %>
+<% if(locals.isAdmin) { %> 
+  <%- include('../../admin/products/includes/product-form', { submitPath: '/admin/products/' + product.id, title: 'Update product', i: i, product: product, category: category, imageRequired: false }) %> 
+<% } %>

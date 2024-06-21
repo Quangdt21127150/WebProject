@@ -1,10 +1,32 @@
-const Account = require("../models/account.model");
+const User = require("../models/user.model");
+const sessionFlash = require("../util/session-flash");
 
 async function getAllAccounts(req, res, next) {
+  let sessionData = sessionFlash.getSessionData(req);
+
+  if (!sessionData) {
+    sessionData = {
+      username: "",
+      password: "",
+      confirmPassword: "",
+      fullname: "",
+      street: "",
+      ward: "Ward / Town",
+      district: "District",
+      city: "City / Province",
+      wardID: "",
+      districtID: "",
+      cityID: "",
+      phone: "",
+      email: "",
+    };
+  }
+
   try {
-    const accounts = await Account.findAll();
+    const accounts = await User.findAll();
     res.render("admin/accounts/all-accounts", {
       accounts: accounts,
+      inputData: sessionData,
     });
   } catch (error) {
     next(error);
@@ -13,7 +35,7 @@ async function getAllAccounts(req, res, next) {
 
 async function getAccount(req, res, next) {
   try {
-    const account = await Account.findById(req.session.uid);
+    const account = await User.findById(req.session.uid);
     res.render("shared/account/profile", {
       account: account,
     });
@@ -22,57 +44,22 @@ async function getAccount(req, res, next) {
   }
 }
 
-async function getUpdateAccount(req, res, next) {
-  try {
-    const account = await Account.findById(req.session.uid);
-    res.render("shared/account/update-account", { account: account });
-  } catch (error) {
-    next(error);
-  }
-}
-
 async function updateAccount(req, res, next) {
   const enteredData = {
-    username: req.body.username,
-    fullname: req.body.fullname,
-    street: req.body.street,
-    postal: req.body.postal,
-    city: req.body.city,
-    image: req.body.image,
+    ...req.body,
   };
 
-  const account = new Account({
+  const account = new User({
     _id: req.params.id,
-    username: enteredData.username,
-    password: "",
-    name: enteredData.fullname,
-    address: {
-      street: enteredData.street,
-      postalCode: enteredData.postal,
-      city: enteredData.city,
-    },
-    isAdmin: false,
-    image: enteredData.image,
+    ...enteredData,
+    address: `${enteredData.street}, ${enteredData.ward}, ${enteredData.district}, ${enteredData.city}`,
   });
-
-  const staticAcc = await Account.findById(req.params.id);
 
   if (req.file) {
     account.replaceImage(req.file.filename);
   }
 
   try {
-    const existsAlready = await Account.findExisted(
-      enteredData.username,
-      req.params.id
-    );
-
-    if (existsAlready.length !== 0) {
-      res.redirect(`/accounts/${req.params.id}`);
-      return;
-    }
-
-    account.isAdmin = staticAcc.isAdmin;
     await account.save();
   } catch (error) {
     next(error);
@@ -80,13 +67,12 @@ async function updateAccount(req, res, next) {
   }
 
   res.redirect(
-    `https://localhost:5000/pay_accounts/update?username=${staticAcc.username}&new=${enteredData.username}`
+    `https://localhost:5000/pay_accounts/update?username=${account.username}&new=${enteredData.username}`
   );
 }
 
 module.exports = {
   getAllAccounts: getAllAccounts,
   getAccount: getAccount,
-  getUpdateAccount: getUpdateAccount,
   updateAccount: updateAccount,
 };
