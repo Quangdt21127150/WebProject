@@ -1,24 +1,24 @@
 <link rel="stylesheet" href="/styles/forms.css" />
-<script src="/scripts/address-data.js" defer></script>
+<script src="/scripts/update-address.js" defer></script>
 
 <p>
-  <label for="username">Username</label>
+  <label for="username">Username (<span class="text-danger">*</span>)</label>
   <input type="text" id="username" name="username" value="<%= inputData.username %>" class="form-control" required>
 </p>
 <p>
-  <label for="password">Password</label>
+  <label for="password">Password (<span class="text-danger">*</span>)</label>
   <input type="password" id="password" name="password" pattern="^\S+$" minlength="6" placeholder="At least 6 characters long, no whitespace" value="<%= inputData.password %>" class="form-control" required>
 </p>
 <p>
-  <label for="confirmPassword">Confirm password</label>
+  <label for="confirmPassword">Confirm password (<span class="text-danger">*</span>)</label>
   <input type="password" id="confirmPassword" name="confirmPassword" value="<%= inputData.confirmPassword %>" class="form-control" required />
 </p>
 <p>
-  <label for="fullname">Fullname</label>
+  <label for="fullname">Fullname (<span class="text-danger">*</span>)</label>
   <input type="text" id="fullname" name="fullname" value="<%= inputData.fullname %>" class="form-control" required />
 </p>
 <p>
-  <label for="street">Address</label>
+  <label for="street">Address (<span class="text-danger">*</span>)</label>
   <section class="combobox">             
     <select name="city" id="city" class="rounded-2" required>
       <option value="<%= inputData.cityID %>" selected><%= inputData.city %></option>
@@ -37,11 +37,11 @@
 </p>
 <p>
   <label for="phone">Phone Number</label>
-  <input type="tel" name="phone" id="phone" pattern="[0-9]{10}" placeholder="Contain 10 digits" value="<%= inputData.phone %>" class="form-control" required />
+  <input type="tel" name="phone" id="phone" pattern="[0-9]{10}" placeholder="Contain 10 digits" value="<%= inputData.phone %>" class="form-control" />
 </p>
 <p>
   <label for="email">Email</label>
-  <input type="email" id="email" name="email" pattern="[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\.[a-zA-Z]{2,}$" placeholder="Ex: abc@gmail.com" value="<%= inputData.email %>" class="form-control" required />
+  <input type="email" id="email" name="email" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$" placeholder="Ex: abc@gmail.com" value="<%= inputData.email %>" class="form-control" />
 </p>
 
         

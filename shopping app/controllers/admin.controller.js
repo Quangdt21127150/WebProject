@@ -3,6 +3,8 @@ const Product = require("../models/product.model");
 const User = require("../models/user.model");
 const Order = require("../models/order.model");
 const sessionFlash = require("../util/session-flash");
+const fs = require("fs");
+const path = require("path");
 
 //Categories Manage
 async function createNewCategory(req, res, next) {
@@ -100,7 +102,9 @@ async function deleteProduct(req, res, next) {
   let product;
   try {
     product = await Product.findById(req.params.id);
-    await product.remove();
+    const filePath = path.join(__dirname, product.image);
+    // await product.remove();
+    console.log(filePath);
   } catch (error) {
     return next(error);
   }
@@ -166,6 +170,7 @@ async function createNewAccount(req, res, next) {
 
 async function deleteAccount(req, res, next) {
   const user = await User.findById(req.params.id);
+
   try {
     await user.remove();
   } catch (error) {
@@ -189,23 +194,6 @@ async function getOrders(req, res, next) {
   }
 }
 
-async function updateOrder(req, res, next) {
-  const orderId = req.params.id;
-  const newStatus = req.body.newStatus;
-
-  try {
-    const order = await Order.findById(orderId);
-
-    order.status = newStatus;
-
-    await order.save();
-
-    res.json({ message: "Order updated", newStatus: newStatus });
-  } catch (error) {
-    next(error);
-  }
-}
-
 //Statistic
 async function getStatistic(req, res, next) {
   res.render("admin/statistic/admin-statistic");
@@ -220,6 +208,7 @@ async function postRevenueByMonth(req, res, next) {
     const orderInYear = orders.filter(
       (order) => order.date.getFullYear() === currentYear
     );
+
     for (let order of orderInYear) {
       if (order.status === "fulfilled") {
         revenue[order.date.getMonth()] += order.productData.totalPrice;
@@ -243,6 +232,7 @@ async function postRevenue10Year(req, res, next) {
         order.date.getFullYear() >= currentYear - 9 &&
         order.date.getFullYear() <= currentYear
     );
+
     for (let order of orderByYear) {
       if (order.status === "fulfilled") {
         revenue[9 - (currentYear - order.date.getFullYear())] +=
@@ -265,6 +255,7 @@ async function postQuantityByMonth(req, res, next) {
     const orderInYear = orders.filter(
       (order) => order.date.getFullYear() === currentYear
     );
+
     for (let order of orderInYear) {
       if (order.status === "fulfilled") {
         for (let item of order.productData.items) {
@@ -279,6 +270,7 @@ async function postQuantityByMonth(req, res, next) {
         }
       }
     }
+
     const quantity = Array.from(products.entries()).sort((a, b) => {
       return a[0].localeCompare(b[0]);
     });
@@ -300,6 +292,7 @@ async function postQuantity10Year(req, res, next) {
         order.date.getFullYear() >= currentYear - 9 &&
         order.date.getFullYear() <= currentYear
     );
+
     for (let order of orderInYear) {
       if (order.status === "fulfilled") {
         for (let item of order.productData.items) {
@@ -312,6 +305,7 @@ async function postQuantity10Year(req, res, next) {
         }
       }
     }
+
     const quantity = Array.from(products.entries()).sort((a, b) => {
       return a[0].localeCompare(b[0]);
     });
@@ -336,7 +330,6 @@ module.exports = {
   deleteAccount: deleteAccount,
 
   getOrders: getOrders,
-  updateOrder: updateOrder,
 
   getStatistic: getStatistic,
   postRevenueByMonth: postRevenueByMonth,

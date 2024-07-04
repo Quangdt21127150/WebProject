@@ -54,11 +54,9 @@ async function getProducts(req, res, next) {
     }
 
     if (price === "cheap") {
-      products = products.filter((product) => product.price < 100000);
+      products = products.filter((product) => product.price <= 100000);
     } else if (price === "medium") {
-      products = products.filter(
-        (product) => product.price >= 100000 && product.price <= 500000
-      );
+      products = products.filter((product) => product.price <= 500000);
     } else if (price === "expensive") {
       products = products.filter((product) => product.price > 500000);
     }
@@ -84,6 +82,7 @@ async function getProducts(req, res, next) {
       start: start,
       end: end,
       total_page: total_page,
+      isFade: req.query.isFade,
     });
   } catch (error) {
     next(error);

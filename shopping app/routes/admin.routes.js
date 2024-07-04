@@ -37,8 +37,6 @@ router.post("/accounts/delete/:id", adminController.deleteAccount);
 // admin/orders
 router.get("/orders", adminController.getOrders);
 
-router.patch("/orders/:id", adminController.updateOrder);
-
 // admin/statistic
 router.get("/statistic", adminController.getStatistic);
 

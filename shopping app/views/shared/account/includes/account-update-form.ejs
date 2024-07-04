@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="/styles/forms.css" />
-<script src="/scripts/address-data.js" defer></script>
+<script src="/scripts/update-address.js" defer></script>
 
 <form
   action="<%= submitPath %>?_csrf=<%= locals.csrfToken %>"
@@ -26,7 +26,7 @@
         </div>
         <div class="modal-body">
           <p>
-            <label for="username">Username</label>
+            <label for="username">Username (<span class="text-danger">*</span>)</label>
             <input
               type="text"
               id="username"
@@ -37,7 +37,7 @@
             />
           </p>
           <p>
-            <label for="fullname">Fullname</label>
+            <label for="fullname">Fullname (<span class="text-danger">*</span>)</label>
             <input
               type="text"
               id="fullname"
@@ -50,7 +50,7 @@
 
           <section class="image-upload-control">
             <p>
-              <label class="text-black" for="image">Image</label>
+              <label class="text-black" for="image">Image (<span class="text-danger">*</span>)</label>
               <input
                 type="file"
                 id="image"
@@ -63,31 +63,22 @@
           </section>
 
           <p>
-            <% const [street, ward, district, city] = account.address.split(", "); %>
-            <label for="street">Address</label>
+            <input type="text" id="address" value="<%= account.address %>" class="d-none">
+            <label for="street">Address (<span class="text-danger">*</span>)</label>
             <section class="combobox">             
-              <select name="city" id="city" class="rounded-2" required>
-                <option value="<%= city %>" selected><%= city %></option>
-              </select>
-        
-              <select name="district" id="district" class="rounded-2" required>
-                <option value="<%= district %>" selected><%= district %></option>
-              </select>
-        
-              <select name="ward" id="ward" class="rounded-2" required>
-                <option value="<%= ward %>" selected><%= ward %></option>
-              </select>
-        
-              <input type="text" id="street" name="street" value="<%= street %>" placeholder=" Apartment number + street" class="form-control" required>
+              <select name="city" id="city" class="rounded-2" required></select>
+              <select name="district" id="district" class="rounded-2" required></select>
+              <select name="ward" id="ward" class="rounded-2" required></select>
+              <input type="text" id="street" name="street" value="" placeholder=" Apartment number + street" class="form-control" required>
             </section>
           </p>
           <p>
             <label for="phone">Phone Number</label>
-            <input type="tel" name="phone" id="phone" pattern="[0-9]{10}" placeholder=" Contain 10 digits" value="<%= account.phone %>" class="form-control" required />
+            <input type="tel" name="phone" id="phone" pattern="[0-9]{10}" placeholder=" Contain 10 digits" value="<%= account.phone %>" class="form-control" />
           </p>
           <p>
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" pattern="[a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\.[a-zA-Z]{2,}$" placeholder=" Ex: abc@gmail.com" value="<%= account.email %>" class="form-control" required />
+            <input type="email" id="email" name="email" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$" placeholder=" Ex: abc@gmail.com" value="<%= account.email %>" class="form-control" />
           </p>          
         </div>
         <div class="modal-footer">

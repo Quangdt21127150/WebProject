@@ -1,4 +1,5 @@
 const Pay_Account = require("../models/pay.model");
+const sessionFlash = require("../util/session-flash");
 
 async function initSystem(req, res, next) {
   try {
@@ -48,7 +49,7 @@ async function createNewPaymentAccount(req, res, next) {
   if (req.query.login === "2") {
     res.redirect("https://localhost:3000/");
   } else if (req.query.login === "3") {
-    res.redirect("https://localhost:3000/products");
+    res.redirect("https://localhost:3000/products?isFade=1");
   } else {
     res.redirect("https://localhost:3000/accounts");
   }
@@ -110,8 +111,15 @@ async function transfer(req, res, next) {
 
   await account.save(customer.username);
 
-  res.redirect(
-    `https://localhost:3000/cart?isPaid=0&customer=${customer.username}&surplus=${customer_surplus}`
+  sessionFlash.flashDataToSession(
+    req,
+    {
+      message: `Your current account balance is ${customer_surplus}`,
+      isError: false,
+    },
+    function () {
+      res.redirect("https://localhost:3000/cart");
+    }
   );
 }
 

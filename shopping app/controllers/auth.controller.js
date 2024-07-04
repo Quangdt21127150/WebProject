@@ -134,7 +134,7 @@ async function login(req, res, next) {
   }
 
   authUtil.createUserSession(req, existingUser, function () {
-    res.redirect("/products");
+    res.redirect("/products?isFade=1");
   });
 }
 

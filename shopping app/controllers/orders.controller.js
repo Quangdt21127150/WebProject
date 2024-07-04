@@ -1,6 +1,7 @@
 const Order = require("../models/order.model");
 const User = require("../models/user.model");
 const Pay_Account = require("../models/pay.model");
+const sessionFlash = require("../util/session-flash");
 
 async function getOrders(req, res) {
   try {
@@ -23,43 +24,46 @@ async function addOrder(req, res, next) {
       await Pay_Account.findByUsername(customer_username)
     ).surplus;
     let pending_order = await Order.findByPendingStatus(res.locals.uid);
-    const price = pending_order
-      ? pending_order.productData.totalPrice + cart.totalPrice
-      : cart.totalPrice;
 
-    if (pending_order && customer_surplus < price) {
-      res.status(200).json({
-        message: "You are in debt",
-        isPaid: 2,
-        customer: customer_username,
-        surplus: customer_surplus,
-      });
+    if (pending_order && customer_surplus < cart.totalPrice) {
+      sessionFlash.flashDataToSession(
+        req,
+        {
+          message: "You have an order that have not been paid for yet.",
+          isError: true,
+        },
+        function () {
+          res.redirect("/cart");
+        }
+      );
       return;
     }
 
-    if (customer_surplus >= price) {
+    if (customer_surplus >= cart.totalPrice) {
       req.session.cart = null;
-      if (pending_order) {
-        pending_order.status = "fulfilled";
-        await pending_order.save();
-      } else {
-        await newOrder.save();
-      }
+      newOrder.status = "fulfilled";
+      await newOrder.save();
 
       res.redirect(
-        `https://localhost:5000/transfer?username=${customer_username}&price=${price}`
+        `https://localhost:5000/transfer?username=${customer_username}&price=${cart.totalPrice}`
       );
 
       return;
     }
 
-    await newOrder.save();
-    res.status(200).json({
-      message: "Not enough money",
-      isPaid: 1,
-      customer: customer_username,
-      surplus: customer_surplus,
-    });
+    if (!pending_order) {
+      await newOrder.save();
+    }
+    sessionFlash.flashDataToSession(
+      req,
+      {
+        message: `Your current account balance is ${customer_surplus}, not enough to pay. Order added to history with status pending.`,
+        isError: true,
+      },
+      function () {
+        res.redirect("/cart");
+      }
+    );
   } catch (error) {
     next(error);
     return;

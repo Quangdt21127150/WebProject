@@ -1,33 +1,48 @@
 <article class="order-item">
   <header class="order-summary">
-    <h2><span class="order-item-price"><%= order.productData.totalPrice %> VND </span> - <%= order.formattedDate %></h2>
+    <h2>
+      <span class="order-item-price"
+        ><%= order.productData.totalPrice.toLocaleString('vi-VN') %> VND
+      </span>
+      - <%= order.formattedDate %>
+    </h2>
     <p><span class="badge"><%= order.status.toUpperCase() %></span></p>
   </header>
 
   <section class="order-details">
     <% if (locals.isAdmin) { %>
-      <address>
-        <p><a href="mailto:<%= order.userData.username %>"><%= order.userData.username %></a></p>
-      </address>
+    <address>
+      <p>
+        <a href="mailto:<%= order.userData.username %>"
+          ><%= order.userData.username %></a
+        >
+      </p>
+    </address>
     <% } %>
     <ul>
       <% for (const item of order.productData.items) { %>
-        <li><%= item.product.title %> - <%= item.totalPrice %> VND (<%= item.product.price %> VND x <%= item.quantity %>)</li>
+      <li>
+        <%= item.product.title %> - <%= item.totalPrice.toLocaleString('vi-VN')
+        %> VND (<%= item.product.price.toLocaleString('vi-VN') %> VND x <%=
+        item.quantity %>)
+      </li>
       <% } %>
     </ul>
-  </section>
-
-  <% if (locals.isAdmin) { %>
-    <section class="order-actions">
-      <form class="d-flex">
-        <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
-        <input type="hidden" name="orderid" value="<%= order.id %>">
-        <select name="status" class="me-2">
-          <option value="pending" <% if (order.status === 'pending') { %>selected<% } %>>Pending</option>
-          <option value="fulfilled" <% if (order.status === 'fulfilled') { %>selected<% } %>>Fulfilled</option>
-          <option value="cancelled" <% if (order.status === 'cancelled') { %>selected<% } %>>Cancelled</option>
-        </select>
+    <% if (!locals.isAdmin && order.status === "pending") { %>
+    <section class="d-flex gap-3 justify-content-center">
+      <form action="">
+        <button class="btn btn-alt">
+          <i class="fa-solid fa-xmark"></i>
+          CANCEL
+        </button>
+      </form>
+      <form action="">
+        <button class="btn btn-alt px-4">
+          <i class="fa-solid fa-credit-card me-1"></i>
+          PAY
+        </button>
       </form>
     </section>
-  <% } %>
+    <% } %>
+  </section>
 </article>

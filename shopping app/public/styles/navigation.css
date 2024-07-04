@@ -14,6 +14,7 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 1;
 }
 
 #main-header nav {
@@ -147,6 +148,18 @@ main {
   color: var(--color-primary-100);
 }
 
+.dropdown {
+  display: none;
+}
+
+.manage {
+  display: block;
+}
+
+.fa-moon {
+  color: var(--color-gray-100);
+}
+
 @media (min-width: 769px) {
   main {
     margin-top: 0;
@@ -193,8 +206,14 @@ main {
     transition: height 0.3s ease;
   }
 
+  .dropdown {
+    display: inline;
+  }
+
   .dropdown:hover .dropdown-menu {
     display: block;
+    padding: 0;
+    border: 0;
     border-radius: 0;
   }
 
@@ -204,6 +223,10 @@ main {
 
   .dropdown-menu a::before {
     border-radius: 0;
+  }
+
+  .manage {
+    display: none;
   }
 
   .nav-items a:hover::before {
