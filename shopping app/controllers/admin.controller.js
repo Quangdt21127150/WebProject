@@ -68,6 +68,7 @@ async function createNewProduct(req, res, next) {
   const product = new Product({
     ...req.body,
     image: req.file.filename,
+    date: new Date(),
   });
 
   try {
@@ -103,8 +104,7 @@ async function deleteProduct(req, res, next) {
   try {
     product = await Product.findById(req.params.id);
     const filePath = path.join(__dirname, product.image);
-    // await product.remove();
-    console.log(filePath);
+    await product.remove();
   } catch (error) {
     return next(error);
   }
@@ -183,7 +183,7 @@ async function deleteAccount(req, res, next) {
 }
 
 //Order Manage
-async function getOrders(req, res, next) {
+async function getAllOrders(req, res, next) {
   try {
     const orders = await Order.findAll();
     res.render("admin/orders/admin-orders", {
@@ -329,7 +329,7 @@ module.exports = {
   createNewAccount: createNewAccount,
   deleteAccount: deleteAccount,
 
-  getOrders: getOrders,
+  getAllOrders: getAllOrders,
 
   getStatistic: getStatistic,
   postRevenueByMonth: postRevenueByMonth,

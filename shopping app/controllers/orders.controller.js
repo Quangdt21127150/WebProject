@@ -3,11 +3,32 @@ const User = require("../models/user.model");
 const Pay_Account = require("../models/pay.model");
 const sessionFlash = require("../util/session-flash");
 
-async function getOrders(req, res) {
+async function getOrders(req, res, next) {
   try {
     const orders = await Order.findAllForUser(res.locals.uid);
+    const pending_order = await Order.findByPendingStatus(res.locals.uid);
+    const today = new Date();
+    let sessionData = sessionFlash.getSessionData(req);
+
+    if (!sessionData) {
+      sessionData = {
+        message: null,
+        isError: false,
+      };
+    }
+
+    if (pending_order) {
+      const isCancelled =
+        Math.abs(today - pending_order.date) / (3600 * 1000) >= 24;
+      if (isCancelled) {
+        pending_order.status = "cancelled";
+        await pending_order.save();
+      }
+    }
+
     res.render("customer/orders/all-orders", {
       orders: orders,
+      inputData: sessionData,
     });
   } catch (error) {
     next(error);
@@ -23,9 +44,9 @@ async function addOrder(req, res, next) {
     const customer_surplus = (
       await Pay_Account.findByUsername(customer_username)
     ).surplus;
-    let pending_order = await Order.findByPendingStatus(res.locals.uid);
+    const pending_order = await Order.findByPendingStatus(res.locals.uid);
 
-    if (pending_order && customer_surplus < cart.totalPrice) {
+    if (pending_order) {
       sessionFlash.flashDataToSession(
         req,
         {
@@ -45,7 +66,7 @@ async function addOrder(req, res, next) {
       await newOrder.save();
 
       res.redirect(
-        `https://localhost:5000/transfer?username=${customer_username}&price=${cart.totalPrice}`
+        `https://localhost:5000/transfer?username=${customer_username}&price=${cart.totalPrice}&isAddOrder=true`
       );
 
       return;
@@ -57,7 +78,7 @@ async function addOrder(req, res, next) {
     sessionFlash.flashDataToSession(
       req,
       {
-        message: `Your current account balance is ${customer_surplus}, not enough to pay. Order added to history with status pending.`,
+        message: `Your current account balance is ${customer_surplus}, not enough to pay. The order has been added to history with a pending status.`,
         isError: true,
       },
       function () {
@@ -66,11 +87,74 @@ async function addOrder(req, res, next) {
     );
   } catch (error) {
     next(error);
-    return;
+  }
+}
+
+async function cancelOrder(req, res, next) {
+  try {
+    const pending_order = await Order.findByPendingStatus(res.locals.uid);
+    pending_order.status = "cancelled";
+    await pending_order.save();
+
+    res.redirect("/orders");
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function payOrder(req, res, next) {
+  try {
+    const customerDocument = await User.findById(res.locals.uid);
+    const customer_username = customerDocument.username;
+    const customer_surplus = (
+      await Pay_Account.findByUsername(customer_username)
+    ).surplus;
+    const pending_order = await Order.findByPendingStatus(res.locals.uid);
+
+    if (customer_surplus >= pending_order.productData.totalPrice) {
+      pending_order.status = "fulfilled";
+      await pending_order.save();
+
+      res.redirect(
+        `https://localhost:5000/transfer?username=${customer_username}&price=${pending_order.productData.totalPrice}&isAddOrder=false`
+      );
+
+      return;
+    }
+
+    sessionFlash.flashDataToSession(
+      req,
+      {
+        message: `Your current account balance is ${customer_surplus}, not enough to pay.`,
+        isError: true,
+      },
+      function () {
+        res.redirect("/orders");
+      }
+    );
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function emptyCancelledOrders(req, res, next) {
+  try {
+    const orders = await Order.findByCancelledStatus(res.locals.uid);
+
+    for (const order of orders) {
+      order.remove();
+    }
+
+    res.redirect("/orders");
+  } catch (error) {
+    next(error);
   }
 }
 
 module.exports = {
   addOrder: addOrder,
+  cancelOrder: cancelOrder,
+  payOrder: payOrder,
+  emptyCancelledOrders: emptyCancelledOrders,
   getOrders: getOrders,
 };

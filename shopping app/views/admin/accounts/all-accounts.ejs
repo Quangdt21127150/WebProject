@@ -86,9 +86,9 @@
                     data-bs-toggle="modal"
                     data-bs-target="#YesNoModal<%= i %>"
                   >
-                    <i class="fa-solid fa-trash"></i>
+                    <i class="fa-solid fa-ban"></i>
                   </button>
-                  <%- include('../../admin/popup/includes/yes-no-popup', { submitPath: '/admin/accounts/delete/' + account._id, message: 'delete this account?', i: i }) %>
+                  <%- include('../../admin/popup/includes/yes-no-popup', { submitPath: '/admin/accounts/delete/' + account._id, message: 'block this account?', i: i }) %>
                 <% } %>
               </td>
             </tr>

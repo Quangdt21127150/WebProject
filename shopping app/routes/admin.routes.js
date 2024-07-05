@@ -35,7 +35,7 @@ router.post("/accounts", adminController.createNewAccount);
 router.post("/accounts/delete/:id", adminController.deleteAccount);
 
 // admin/orders
-router.get("/orders", adminController.getOrders);
+router.get("/orders", adminController.getAllOrders);
 
 // admin/statistic
 router.get("/statistic", adminController.getStatistic);

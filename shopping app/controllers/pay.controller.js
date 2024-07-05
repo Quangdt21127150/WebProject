@@ -94,6 +94,7 @@ async function transfer(req, res, next) {
   const customer = await Pay_Account.findByUsername(req.query.username);
   const admin_surplus = admin.surplus + parseInt(req.query.price);
   const customer_surplus = customer.surplus - parseInt(req.query.price);
+  const isAddOrder = req.query.isAddOrder === "true";
 
   let account = new Pay_Account({
     username: admin.username,
@@ -118,7 +119,9 @@ async function transfer(req, res, next) {
       isError: false,
     },
     function () {
-      res.redirect("https://localhost:3000/cart");
+      isAddOrder
+        ? res.redirect("https://localhost:3000/cart")
+        : res.redirect("https://localhost:3000/orders");
     }
   );
 }

@@ -1,7 +1,9 @@
 <%- include('../../shared/homepage/head', { pageTitle: 'Login' }) %>
   <link rel="stylesheet" href="/styles/forms.css">
   <link rel="stylesheet" href="/styles/auth.css">
+  <script src="/scripts/show-hide-password.js" defer></script>
 </head>
+
 <body>
   <%- include('../../shared/homepage/header') %>
   <main>
@@ -22,7 +24,12 @@
 
       <p>
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" value="<%= inputData.password %>" class="form-control" required>
+        <section class="input-group" id="password-frame">
+          <input type="password" id="password" name="password" value="<%= inputData.password %>" class="form-control" required>
+          <section class="input-group-text">
+            <a href="" class="text-black"><i class="fa fa-eye-slash"></i></a>
+          </section>
+        </section>
       </p>
 
       <hr>

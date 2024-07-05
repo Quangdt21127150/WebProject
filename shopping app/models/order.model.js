@@ -69,6 +69,22 @@ class Order {
     }
   }
 
+  static async findByCancelledStatus(userId) {
+    const orders = await db
+      .getDb()
+      .collection("orders")
+      .find({ $and: [{ "userData.id": userId }, { status: "cancelled" }] })
+      .sort({ _id: -1 })
+      .toArray();
+
+    console.log(orders);
+    if (orders) {
+      return this.transformOrderDocuments(orders);
+    } else {
+      return [];
+    }
+  }
+
   static async findById(orderId) {
     const order = await db
       .getDb()
@@ -95,6 +111,11 @@ class Order {
 
       return db.getDb().collection("orders").insertOne(orderDocument);
     }
+  }
+
+  remove() {
+    const orderId = new mongodb.ObjectId(this.id);
+    return db.getDb().collection("orders").deleteOne({ _id: orderId });
   }
 }
 
