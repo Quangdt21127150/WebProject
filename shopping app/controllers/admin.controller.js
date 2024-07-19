@@ -198,8 +198,8 @@ async function createNewVoucher(req, res, next) {
   const voucher = new Voucher({
     ...req.body,
     image: req.file.filename,
+    isSpecial: false,
   });
-  console.log(voucher);
 
   try {
     await voucher.save();
@@ -214,6 +214,7 @@ async function updateVoucher(req, res, next) {
   const voucher = new Voucher({
     _id: req.params.id,
     ...req.body,
+    isSpecial: false,
   });
 
   if (req.file) {

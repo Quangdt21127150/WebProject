@@ -1,11 +1,10 @@
-const mongodb = require("mongodb");
-
 const db = require("../data/database");
 
 class Pay_Account {
   constructor(pay_accountData) {
     this.username = pay_accountData.username;
     this.surplus = pay_accountData.surplus;
+    this.vouchers = pay_accountData.vouchers;
     this.GoogleOrFacebookUsername = pay_accountData.GoogleOrFacebookUsername;
     this.isAdmin = pay_accountData.isAdmin;
     if (pay_accountData._id) {
@@ -29,7 +28,12 @@ class Pay_Account {
       .findOne({
         $or: [
           { username: this.username },
-          { GoogleOrFacebookUsername: this.GoogleOrFacebookUsername },
+          {
+            $and: [
+              { GoogleOrFacebookUsername: { $ne: "" } },
+              { GoogleOrFacebookUsername: this.GoogleOrFacebookUsername },
+            ],
+          },
         ],
       });
   }
@@ -50,6 +54,7 @@ class Pay_Account {
     const pay_accountData = {
       username: this.username,
       surplus: this.surplus,
+      vouchers: this.vouchers,
       GoogleOrFacebookUsername: this.GoogleOrFacebookUsername,
       isAdmin: this.isAdmin,
     };
@@ -61,6 +66,7 @@ class Pay_Account {
     const pay_accountData = {
       username: this.username,
       surplus: this.surplus,
+      vouchers: this.vouchers,
       GoogleOrFacebookUsername: this.GoogleOrFacebookUsername,
       isAdmin: this.isAdmin,
     };

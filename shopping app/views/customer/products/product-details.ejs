@@ -29,7 +29,7 @@
     <section id="carouselRelatedProducts" class="carousel slide">
       <section class="carousel-inner">
         <% for (let i = 0; i < number_product; i += 3) { %>
-          <section class="carousel-item <% if(i == 0) { %> active <% } %>">
+          <section class="carousel-item <%= i === 0 ? 'active' : '' %>">
             <ul class="products-grid">
               <% for (let j = 0; j < 3; ++j) { %>
                 <%  if (i + j < number_product) { %>

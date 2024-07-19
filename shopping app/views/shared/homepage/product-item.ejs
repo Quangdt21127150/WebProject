@@ -8,7 +8,7 @@
         type="button"
         class="btn btn-alt"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal<%= i %>"
+        data-bs-target="#productModal<%= i %>"
       >
         <i class="fa-solid fa-pen-to-square"></i>
       </button>
@@ -37,6 +37,5 @@
 include('../../admin/products/includes/product-form', { submitPath:
 '/admin/products/' + product.id, title: 'Update product', i: i, product:
 product, category: category, imageRequired: false }) %> <%-
-include('../../admin/popup/includes/yes-no-popup', {submitPath:
-'/admin/products/delete/' + product.id, message: 'delete this product?', i: i })
-%> <% } %>
+include('../../admin/popup/yes-no-popup', {submitPath: '/admin/products/delete/'
++ product.id, message: 'delete this product?', i: i }) %> <% } %>

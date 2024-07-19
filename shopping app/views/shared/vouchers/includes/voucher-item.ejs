@@ -1,1 +1,67 @@
-<img src="/assets/icons/voucher.png" alt="Voucher" class="my-3" />
+<% function pluralize(noun) {
+    // The noun ends with 's', 'x', 'z', 'sh', or 'ch'
+    if (noun.match(/(s|x|z|sh|ch)$/)) {
+    return noun + "es";
+    }
+
+    // The noun ends with 'y' and is preceded by a consonant
+    if (noun.match(/[^aeiou]y$/)) {
+    return noun.slice(0, -1) + "ies";
+    }
+
+    // The noun ends with 'f' or 'fe'
+    if (noun.match(/(f|fe)$/)) {
+    return noun.replace(/(f|fe)$/, "ves");
+    }
+
+    // The noun ends with a consonant followed by 'o'
+    if (noun.match(/[^aeiou]o$/)) {
+    return noun + "es";
+    }
+
+    // Other cases
+    return noun + "s";
+} 
+
+const type = voucher.value[0]
+const number = parseInt(voucher.value.match(/\d+/))
+let promotion
+if(type === 'd'){
+    promotion = 'Discount ' + number + '% off entire bill'
+} else if(type === 'g') {
+    const product = number === 1 ? voucher.value.split('-')[1] : pluralize(voucher.value.split('-')[1])
+    promotion = 'Get free ' + number + ' ' + product
+} else {
+    promotion = 'Extra ' + number + ' points'
+} 
+
+const date = voucher.expiration.toISOString().split('T')[0].split('-') 
+%>
+
+<article class="position-relative mx-auto w-90" style="width: fit-content;">
+    <img src="/assets/icons/voucher.png" alt="Voucher" class="my-3 img-fluid" />
+    <section id="voucher-content" class="position-absolute text-white d-flex flex-column justify-content-between top-50 start-0">
+        <i><%= voucher.title %></i>
+        <i class="text-uppercase"><strong><%= promotion %></strong></i>
+        <i>
+            <article class="d-flex justify-content-between">
+                <article>Point</article>
+                <article>Expiration</article>
+            </article>
+            <article class="d-flex justify-content-between">
+                <article><%= voucher.point %></article>
+                <article><%= `${date[2]}/${date[1]}/${date[0]}` %></article>
+            </article>
+        </i>
+    </section>
+    <img src="<%= voucher.imageUrl %>" alt="Icon" id="icon" class="position-absolute top-50 end-0">
+    <section class="buttons position-absolute end-0 <%= voucher.isSpecial || !locals.isAdmin ? 'd-none' : 'd-flex' %>">
+        <button class="btn border-0 rounded-0 rounded-end"><i class="fa-solid fa-pen-to-square" data-bs-toggle="modal" data-bs-target="#voucherModal<%= i %>"></i></button>
+        <button class="btn border-0 rounded-0 rounded-end"><i class="fa-solid fa-trash" data-bs-toggle="modal" data-bs-target="#YesNoModal<%= i %>"></i></button>
+    </section>
+</article>
+
+<% if(locals.isAdmin) { %> 
+    <%- include('../../../admin/vouchers/includes/voucher-form', { submitPath: '/admin/vouchers/' + voucher.id, title: 'Update voucher', i: i, voucher: voucher, tomorrow: tomorrow, imageRequired: false }) %>
+    <%- include('../../../admin/popup/yes-no-popup', {submitPath: '/admin/vouchers/delete/' + voucher.id, message: 'delete this voucher?', i: i }) %>
+<% } %>

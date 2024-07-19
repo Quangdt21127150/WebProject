@@ -9,6 +9,7 @@ async function initSystem(req, res, next) {
       const account = new Pay_Account({
         username: req.query.username,
         surplus: 0,
+        vouchers: [],
         GoogleOrFacebookUsername: GoogleOrFacebookUsername,
         isAdmin: true,
       });
@@ -40,9 +41,11 @@ async function createNewPaymentAccount(req, res, next) {
   const account = new Pay_Account({
     username: req.query.username,
     surplus: 1000000,
+    vouchers: [],
     GoogleOrFacebookUsername: req.query.GoogleOrFacebookUsername,
     isAdmin: false,
   });
+  console.log(account);
 
   const existsAccounts = await account.existsAlready();
 
@@ -81,6 +84,7 @@ async function updatePaymentAccount(req, res, next) {
   const account = new Pay_Account({
     username: req.query.new,
     surplus: existsAlready.surplus,
+    vouchers: existsAlready.vouchers,
     GoogleOrFacebookUsername: existsAlready.GoogleOrFacebookUsername,
     isAdmin: existsAlready.isAdmin,
   });
@@ -113,6 +117,7 @@ async function transfer(req, res, next) {
   let account = new Pay_Account({
     username: admin.username,
     surplus: admin_surplus,
+    vouchers: [],
     GoogleOrFacebookUsername: admin.username,
     isAdmin: true,
   });
@@ -122,6 +127,7 @@ async function transfer(req, res, next) {
   account = new Pay_Account({
     username: customer.username,
     surplus: customer_surplus,
+    vouchers: customer.vouchers,
     GoogleOrFacebookUsername: customer.GoogleOrFacebookUsername,
     isAdmin: false,
   });

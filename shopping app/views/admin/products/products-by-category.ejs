@@ -8,7 +8,7 @@
   <main>
     <h1 class="my-2">Product Management</h1>   
     <p>
-      <button type="button" class="btn btn-solid mt-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <button type="button" class="btn btn-solid mt-3" data-bs-toggle="modal" data-bs-target="#productModal">
         <i class="fa-solid fa-circle-plus me-1"></i>
         Add Product
       </button>
@@ -22,13 +22,17 @@
       }, imageRequired: true }) %>
     </p>
 
-    <ul class="products-grid">
-      <% for (let i = start; i < end; ++i) { %>
-        <li>
-          <%- include('../../shared/homepage/product-item', { product: products[i], i: i, category: category }) %>
-        </li>
-      <% } %>
-    </ul>
+    <% if(products.length === 0) { %>
+      <i><h4 class="text-center text-secondary mt-5">No products avaiable</h4></i>
+    <%} else { %>
+      <ul class="products-grid">
+        <% for (let i = start; i < end; ++i) { %>
+          <li>
+            <%- include('../../shared/homepage/product-item', { product: products[i], i: i, category: category }) %>
+          </li>
+        <% } %>
+      </ul>
+    <% } %>
 
     <ul class="pagination mb-3">
       <li class="page-item">

@@ -103,7 +103,7 @@ function setTheme() {
   if (form) {
     form.css("backgroundColor", isChecked ? "#E6E6E6" : "black");
     form
-      .find("#switch-form a, hr")
+      .find("hr")
       .css("color", isChecked ? "green" : "var(--color-primary-200)");
   }
 

@@ -52,7 +52,7 @@
           </div>
         </form>
 
-        <%- include('../../admin/popup/includes/notification', { message: inputData.errorMessage, isError: true }) %>
+        <%- include('../../admin/popup/notification', { message: inputData.errorMessage, isError: true }) %>
       </p>
     </section>
     <section class="table-responsive">
@@ -72,11 +72,7 @@
               <td><%= account.username %></td>
               <td><%= account.fullname %></td>
               <td>
-                <% if(account.isAdmin) { %> 
-                  Admin
-                <% } else { %>  
-                  Customer 
-                <% } %> 
+                <%= account.isAdmin ? 'Admin' : 'Customer' %> 
               </td>
               <td>
                 <% if (!account.isAdmin) { %>
@@ -88,7 +84,7 @@
                   >
                     <i class="fa-solid fa-ban"></i>
                   </button>
-                  <%- include('../../admin/popup/includes/yes-no-popup', { submitPath: '/admin/accounts/delete/' + account._id, message: 'block this account?', i: i }) %>
+                  <%- include('../../admin/popup/yes-no-popup', { submitPath: '/admin/accounts/delete/' + account._id, message: 'block this account?', i: i }) %>
                 <% } %>
               </td>
             </tr>

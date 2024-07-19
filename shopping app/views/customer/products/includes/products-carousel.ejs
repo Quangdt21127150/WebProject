@@ -1,18 +1,18 @@
 <script src="/scripts/carousel-switch.js" defer></script>
 
-<section <% if(isFade) { %>
-  class="animated" <% } %>>
-  <h1 class="my-2"><%= title %></h1>
+<section 
+  class="<%= isFade ? 'fadeDown' : '' %>">
+  <h1 class="my-2 customer-title"><%= title %></h1>
 
   <section
     id="carousel<%= i %>"
     class="carousel slide my-5"
     data-bs-ride="<%= i === 1 ? 'carousel' : 'false' %>"
-    <% if(i === 1) { %> data-bs-interval="3000" <% } %>
+    <%= i === 1 ? 'data-bs-interval="3000"' : '' %>
   >
     <section class="carousel-inner text-center">
       <% for(let i = 0; i < 5; ++i) { %>
-      <section class="carousel-item <% if(i === 0) { %> active <% } %>">
+      <section class="carousel-item <%= i === 0 ? 'active' : '' %>">
         <% if(products[i].title) { %>
         <a href="/products/<%= products[i].id %>"
           ><img
